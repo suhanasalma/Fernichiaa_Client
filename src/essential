@@ -1,5 +1,5 @@
 react-router
-tailwind,daisy ui
+tailwind,daisy ui,merakiui
 firebase
 .env.local
 pages setting up
