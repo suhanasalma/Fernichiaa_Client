@@ -8,6 +8,11 @@ import LogIn from "../../Pages/Login/LogIn/LogIn";
 import SignUp from "../../Pages/Login/SignUp/SignUp";
 import DashBoard from "../../Pages/DashBoard/DashBoard";
 import DashboardLayer from "../../Layer/DashboardLayer/DashboardLayer";
+import AllSellers from "../../Pages/DashBoard/AllSellers/AllSellers";
+import AllBuyers from "../../Pages/DashBoard/AllBuyers/AllBuyers";
+import MyBuyers from "../../Pages/DashBoard/MyBuyers/MyBuyers";
+import MyOrders from "../../Pages/DashBoard/MyOrders/MyOrders";
+import AddProducts from "../../Pages/DashBoard/AddProducts/AddProducts";
 
 const { createBrowserRouter } = require("react-router-dom");
 const { default: Main } = require("../../Layer/Main/Main");
@@ -45,35 +50,55 @@ export const router = createBrowserRouter([
       },
       {
         path: "/allProducts/advertise",
-        element:<AllAdvertisements/>
+        element: <AllAdvertisements />,
       },
       {
-        path:'/carts',
-        element:<Carts/>
+        path: "/carts",
+        element: <Carts />,
       },
       {
-        path:'/wishlists',
-        element:<WishLists/>
+        path: "/wishlists",
+        element: <WishLists />,
       },
       {
-        path:'/login',
-        element:<LogIn/>
+        path: "/login",
+        element: <LogIn />,
       },
       {
-        path:"/signup",
-        element:<SignUp/>
-      }
-
+        path: "/signup",
+        element: <SignUp />,
+      },
     ],
   },
   {
-    path:'/dashboard',
-    element:<DashboardLayer/>,
-    children:[
+    path: "/dashboard",
+    element: <DashboardLayer />,
+    children: [
       {
-        path:'/dashboard',
-        element:<DashBoard/>
-      }
-    ]
-  }
+        path: "/dashboard",
+        element: <DashBoard />,
+      },
+      {
+        path: "/dashboard/allsellers",
+        element:<AllSellers/>
+      },
+      {
+        path: "/dashboard/allbuyers",
+        element:<AllBuyers/>
+      },
+      {
+        path: "/dashboard/mybuyers",
+        element:<MyBuyers/>
+      },
+      {
+        path: "/dashboard/myorders",
+        element:<MyOrders/>
+      },
+      {
+        path: "/dashboard/addproducts",
+        element:<AddProducts/>
+      },
+
+    ],
+  },
 ]);

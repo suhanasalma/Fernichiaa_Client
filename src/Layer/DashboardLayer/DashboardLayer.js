@@ -1,11 +1,11 @@
 import React, { useContext } from "react";
-import { Outlet } from "react-router-dom";
+import { Link, Outlet } from "react-router-dom";
 import { authContext } from "../../Context/SharedContext";
 import Header from "../../Pages/SharedPages/Header/Header";
 
 const DashboardLayer = () => {
-   const {user} = useContext(authContext)
-   console.log(user)
+  const { user } = useContext(authContext);
+  console.log(user);
   return (
     <div>
       <Header></Header>
@@ -42,7 +42,8 @@ const DashboardLayer = () => {
 
             <div className="flex flex-col justify-between flex-1 mt-6">
               <nav>
-                <a
+                <Link
+                  to="/dashboard/allbuyers"
                   className="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform  hover:bg-gray-200   hover:text-gray-700"
                   href="#"
                 >
@@ -69,10 +70,11 @@ const DashboardLayer = () => {
                   </svg>
 
                   <span className="mx-4 font-medium">All Buyers</span>
-                </a>
-                <a
+                </Link>
+
+                <Link
+                  to="/dashboard/allsellers"
                   className="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform  hover:bg-gray-200   hover:text-gray-700"
-                  href="#"
                 >
                   <svg
                     className="w-5 h-5"
@@ -97,10 +99,10 @@ const DashboardLayer = () => {
                   </svg>
 
                   <span className="mx-4 font-medium">All Sellers</span>
-                </a>
-                <a
+                </Link>
+                <Link
+                  to="/dashboard/mybuyers"
                   className="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform  hover:bg-gray-200   hover:text-gray-700"
-                  href="#"
                 >
                   <svg
                     className="w-5 h-5"
@@ -125,9 +127,10 @@ const DashboardLayer = () => {
                   </svg>
 
                   <span className="mx-4 font-medium">My Buyers</span>
-                </a>
+                </Link>
 
-                <a
+                <Link
+                  to="/dashboard/myorders"
                   className="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform hover:bg-gray-200  hover:text-gray-700"
                   href="#"
                 >
@@ -147,8 +150,9 @@ const DashboardLayer = () => {
                   </svg>
 
                   <span className="mx-4 font-medium">My Orders</span>
-                </a>
-                <a
+                </Link>
+                <Link
+                  to="/dashboard/addproducts"
                   className="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform  hover:bg-gray-200 hover:text-gray-700"
                   href="#"
                 >
@@ -175,7 +179,7 @@ const DashboardLayer = () => {
                   </svg>
 
                   <span className="mx-4 font-medium">Add a Products</span>
-                </a>
+                </Link>
               </nav>
             </div>
           </div>
