@@ -1,3 +1,4 @@
+import ProductDetails from "../../Pages/Products/ProductDetails/ProductDetails";
 import Products from "../../Pages/Products/Products/Products";
 const { createBrowserRouter } = require("react-router-dom");
 const { default: Main } = require("../../Layer/Main/Main");
@@ -14,10 +15,15 @@ export const router = createBrowserRouter([
       },
       {
         path: "/categories/:id",
-        loader : ({params})=>
-         fetch(`http://localhost:5000/categories/${params.id}`)
-        ,
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/categories/${params.id}`),
         element: <Products />,
+      },
+      {
+        path: "/productDetails/:id",
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/productDetails/${params.id}`),
+        element: <ProductDetails />,
       },
     ],
   },
