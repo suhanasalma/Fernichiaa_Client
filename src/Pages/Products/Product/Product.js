@@ -3,7 +3,6 @@ import { FaHeart } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
 const Product = ({ product }) => {
-  console.log(product);
   const {
     categoryName,
     title,
@@ -19,7 +18,7 @@ const Product = ({ product }) => {
     postedTime,
     isVarified,
   } = product;
-  console.log(product)
+
 
   return (
     <div className="shadow-2xl rounded-lg p-6">
