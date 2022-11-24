@@ -22,11 +22,21 @@ const Product = ({ product }) => {
 
   return (
     <div className="shadow-2xl rounded-lg p-6">
-      <img
-        className="object-cover object-center w-full h-64 rounded-lg lg:h-80"
-        src={img}
-        alt=""
-      />
+      <div className="relative">
+        <img
+          className="object-cover object-center w-full h-64 rounded-lg lg:h-80"
+          src={img}
+          alt=""
+        />
+        <Link to="/wishlists">
+          <div
+            className="absolute  bottom-64 left-96 w-10 h-10 bg-white flex justify-center items-center rounded-full tooltip"
+            data-tip="wishlist"
+          >
+            <FaHeart className="text-xl text-secondary " />
+          </div>
+        </Link>
+      </div>
 
       <div className="mt-8">
         <div className="flex justify-between">
@@ -78,7 +88,7 @@ const Product = ({ product }) => {
           </div>
 
           <Link
-            to='/carts'
+            to="/carts"
             className="inline-block text-secondary underline hover:text-blue-400"
           >
             Add To Cart

@@ -16,6 +16,12 @@ const Header = () => {
       <Link to="/allproducts">Products</Link>
     </li>,
     <li>
+      <Link to="/carts">Cart</Link>
+    </li>,
+    <li>
+      <Link to="/wishlists">WishList</Link>
+    </li>,
+    <li>
       <Link>Login</Link>
     </li>,
   ];
@@ -53,7 +59,7 @@ const Header = () => {
           <Link to="/">
             <div className="flex items-center gap-2">
               <img className="w-16" src={img} alt="" />
-              <h1 className="uppercase">refernichaia</h1>
+              <h1 className="uppercase text-xl">refernichiaa</h1>
             </div>
           </Link>
         </div>

@@ -1,35 +1,68 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import img from "../../../Assets/Logo/Sofa.svg";
+import AdminCard from "./AdminCard";
 
-const Footer = () => {
+const AdminPannel = () => {
+  const adminPannels = [
+    {
+      id:1,
+      name: "suhana",
+      img: "",
+    },
+    {
+      id:2,
+      name: "salma",
+      img: "",
+    },
+    {
+      id:3,
+      name: "asma",
+      img: "",
+    },
+    {
+      id:4,
+      name: "shakil",
+      img: "",
+    },
+  ];
   return (
-    <footer class="bg-info">
-      <div class="container p-6 mx-auto">
-        <div class="lg:flex">
-          <div class="w-full -mx-6 lg:w-2/5">
-            <div class="px-6">
-              <div className="flex-1">
-                <Link to="/">
-                  <div className="flex items-center gap-2">
-                    <img className="w-10" src={img} alt="" />
-                    <h1 className="uppercase text-xl">refernichiaa</h1>
-                  </div>
-                </Link>
-              </div>
+    <div>
+      <section class="bg-white dark:bg-gray-900">
+        <div class="container px-6 py-10 mx-auto ">
+          <h1 class="text-3xl font-semibold text-center text-secondary capitalize lg:text-4xl ">
+            Our Executive Team
+          </h1>
 
-              <p class="max-w-sm mt-2 text-gray-500 dark:text-gray-400">
-                Join 31,000+ other and never miss out on your desire products
+          <p class="max-w-2xl mx-auto my-6 text-center text-gray-500 dark:text-gray-300">
+           This is our awsome team, who ensure your secure delivery and transection . if you ever face any kind of violance , fraud, or if you need any kind of help regarding to be a member or you want to be an seller or want to work in admin panner you can always contact us.kindly contact through given information.
+          </p>
+
+          <div class="grid grid-cols-1 gap-8 mt-8 xl:mt-16 md:grid-cols-2 xl:grid-cols-4">
+            {
+               adminPannels.map(admin=><AdminCard key={admin.id} admin={admin}></AdminCard>)
+            }
+            {/* <div class="flex flex-col items-center p-8 transition-colors duration-300 transform cursor-pointer group hover:bg-secondary rounded-xl">
+              <img
+                class="object-cover w-32 h-32 rounded-full ring-4 ring-gray-300"
+                src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=880&q=80"
+                alt=""
+              />
+
+              <h1 class="mt-4 text-2xl font-semibold text-gray-700 capitalize dark:text-white group-hover:text-white">
+                arthur melo
+              </h1>
+
+              <p class="mt-2 text-gray-500 capitalize dark:text-gray-300 group-hover:text-gray-300">
+                design director
               </p>
 
-              <div class="flex mt-6 -mx-2">
+              <div class="flex mt-3 -mx-2">
                 <a
                   href="#"
-                  class="mx-2 text-gray-600 transition-colors duration-300 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400"
+                  class="mx-2 text-gray-600 dark:text-gray-300 hover:text-gray-500 dark:hover:text-gray-300 group-hover:text-white"
                   aria-label="Reddit"
                 >
                   <svg
-                    class="w-5 h-5 fill-current"
+                    class="w-6 h-6 fill-current"
                     viewBox="0 0 24 24"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
@@ -40,11 +73,11 @@ const Footer = () => {
 
                 <a
                   href="#"
-                  class="mx-2 text-gray-600 transition-colors duration-300 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400"
+                  class="mx-2 text-gray-600 dark:text-gray-300 hover:text-gray-500 dark:hover:text-gray-300 group-hover:text-white"
                   aria-label="Facebook"
                 >
                   <svg
-                    class="w-5 h-5 fill-current"
+                    class="w-6 h-6 fill-current"
                     viewBox="0 0 24 24"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
@@ -55,11 +88,11 @@ const Footer = () => {
 
                 <a
                   href="#"
-                  class="mx-2 text-gray-600 transition-colors duration-300 dark:text-gray-300 hover:text-blue-500 dark:hover:text-blue-400"
+                  class="mx-2 text-gray-600 dark:text-gray-300 hover:text-gray-500 dark:hover:text-gray-300 group-hover:text-white"
                   aria-label="Github"
                 >
                   <svg
-                    class="w-5 h-5 fill-current"
+                    class="w-6 h-6 fill-current"
                     viewBox="0 0 24 24"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
@@ -68,102 +101,12 @@ const Footer = () => {
                   </svg>
                 </a>
               </div>
-            </div>
-          </div>
-
-          <div class="mt-6 lg:mt-0 lg:flex-1">
-            <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-              <div>
-                <h3 class="text-gray-700 uppercase dark:text-white">About</h3>
-                <a
-                  href="#"
-                  class="block mt-2 text-sm text-gray-600 dark:text-gray-400 hover:underline"
-                >
-                  Company
-                </a>
-                <a
-                  href="#"
-                  class="block mt-2 text-sm text-gray-600 dark:text-gray-400 hover:underline"
-                >
-                  community
-                </a>
-                <a
-                  href="#"
-                  class="block mt-2 text-sm text-gray-600 dark:text-gray-400 hover:underline"
-                >
-                  Careers
-                </a>
-              </div>
-
-              <div>
-                <h3 class="text-gray-700 uppercase dark:text-white">Blog</h3>
-                <a
-                  href="#"
-                  class="block mt-2 text-sm text-gray-600 dark:text-gray-400 hover:underline"
-                >
-                  Tec
-                </a>
-                <a
-                  href="#"
-                  class="block mt-2 text-sm text-gray-600 dark:text-gray-400 hover:underline"
-                >
-                  Music
-                </a>
-                <a
-                  href="#"
-                  class="block mt-2 text-sm text-gray-600 dark:text-gray-400 hover:underline"
-                >
-                  Videos
-                </a>
-              </div>
-
-              <div>
-                <h3 class="text-gray-700 uppercase dark:text-white">
-                  Products
-                </h3>
-                <a
-                  href="#"
-                  class="block mt-2 text-sm text-gray-600 dark:text-gray-400 hover:underline"
-                >
-                  Mega cloud
-                </a>
-                <a
-                  href="#"
-                  class="block mt-2 text-sm text-gray-600 dark:text-gray-400 hover:underline"
-                >
-                  Aperion UI
-                </a>
-                <a
-                  href="#"
-                  class="block mt-2 text-sm text-gray-600 dark:text-gray-400 hover:underline"
-                >
-                  Meraki UI
-                </a>
-              </div>
-
-              <div>
-                <h3 class="text-gray-700 uppercase dark:text-white">Contact</h3>
-                <span class="block mt-2 text-sm text-gray-600 dark:text-gray-400 hover:underline">
-                  +1 526 654 8965
-                </span>
-                <span class="block mt-2 text-sm text-gray-600 dark:text-gray-400 hover:underline">
-                  example@email.com
-                </span>
-              </div>
-            </div>
+            </div> */}
           </div>
         </div>
-
-        <hr class="h-px my-6 bg-gray-200 border-none dark:bg-gray-700" />
-
-        <div>
-          <p class="text-center text-gray-500 dark:text-gray-400">
-            © Brand 2020 - All rights reserved
-          </p>
-        </div>
-      </div>
-    </footer>
+      </section>
+    </div>
   );
 };
 
-export default Footer;
+export default AdminPannel;

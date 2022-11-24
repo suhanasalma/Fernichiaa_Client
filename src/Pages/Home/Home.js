@@ -1,4 +1,5 @@
 import React from 'react';
+import AdminPannel from '../AdminPannel/AdminPannel';
 import Advertisements from './Advertisements/Advertisements/Advertisements';
 import Categories from './Category/Categories';
 // import Categories from './Category/Categories';
@@ -12,6 +13,7 @@ const Home = () => {
          <Categories/>
          <Advertisements/>
          <Informations/>
+         <AdminPannel/>
       </div>
    );
 };

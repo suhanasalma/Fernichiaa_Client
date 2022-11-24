@@ -26,7 +26,13 @@ const AllAdvertisements = () => {
    return (
      <div>
        <>
-         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 xl:grid-cols-3">
+         <div className="bg-info h-40 flex justify-center items-center text-3xl">
+           <div className="text-center">
+             <h1>Advertisements Product</h1>
+             <p>Advertise</p>
+           </div>
+         </div>
+         <div className="grid grid-cols-1 gap-8 md:grid-cols-2 xl:grid-cols-3 my-20">
            {allProducts?.map((product) => (
              <Product key={product._id} product={product}></Product>
            ))}

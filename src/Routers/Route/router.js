@@ -3,6 +3,8 @@ import Products from "../../Pages/Products/Products/Products";
 import Carts from '../../Pages/Carts/Carts/Carts'
 import AllProducts from "../../Pages/Products/AllProducts/AllProducts";
 import AllAdvertisements from "../../Pages/AllAdvertisements/AllAdvertisements";
+import WishLists from "../../Pages/WishLists/WishLists";
+
 const { createBrowserRouter } = require("react-router-dom");
 const { default: Main } = require("../../Layer/Main/Main");
 const { default: Home } = require("../../Pages/Home/Home");
@@ -41,6 +43,15 @@ export const router = createBrowserRouter([
         path: "/allProducts/advertise",
         element:<AllAdvertisements/>
       },
+      {
+        path:'/carts',
+        element:<Carts/>
+      },
+      {
+        path:'/wishlists',
+        element:<WishLists/>
+      }
+
     ],
   },
 ]);
