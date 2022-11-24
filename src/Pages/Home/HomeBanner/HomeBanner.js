@@ -31,7 +31,7 @@ const HomeBanner = () => {
     <div className="h-screen">
       <div className="carousel w-full h-5/6 bg-info ">
         {infos.map((info) => (
-          <Banner info={info}></Banner>
+          <Banner key={info.id} info={info}></Banner>
         ))}
       </div>
     </div>

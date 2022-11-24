@@ -3,6 +3,10 @@ tailwind,daisy ui
 firebase
 .env.local
 pages setting up
+react query download
 
 server side 
 express download
+mongodb
+cors
+dotenv

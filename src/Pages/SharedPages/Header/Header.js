@@ -8,6 +8,7 @@ const Header = () => {
   const menus = [
     <li><a>Item 1</a></li>,
     <li><a>Item 3</a></li>,
+    <li><Link to='/products'>Products</Link></li>,
     <li><Link>Login</Link></li>
   ];
 
