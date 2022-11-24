@@ -10,27 +10,85 @@ const SignUp = () => {
      handleSubmit,
      formState: { errors },
    } = useForm();
-   const formData = new FormData();
+   
 
 
-   const {createUser} = useContext(authContext)
+   const { createUser, updateUser } = useContext(authContext);
+   const imageHostKey = process.env.REACT_APP_imgbb_key;
+   // console.log(imageHostKey);
 
    // const [data,setData] = useState('')
 
    const handleInfo = (data) =>{
-      console.log(data)
-      createUser(data.email, data.password)
-        .then((userCredential) => {
-          // Signed in
-          const user = userCredential.user;
-          console.log(user)
-          // ...
-        })
-        .catch((error) => {
-          const errorCode = error.code;
-          const errorMessage = error.message;
-          // ..
-        });
+      const img = data.photo[0]
+      const formData = new FormData();
+      formData.append('image',img)
+      const url = `https://api.imgbb.com/1/upload?&key=${imageHostKey}`;
+      fetch(url,{
+         method:"POST",
+         body:formData
+      })
+      .then(res=>res.json())
+      .then(result=>{
+         console.log(result)
+         if (result.success) {
+           const user = {
+             name: data.name,
+             age: data.age,
+             phone: data.phone,
+             address: data.address,
+             email: data.email,
+             role: data.role,
+             img: result.data.display_url,
+           };
+           fetch("http://localhost:5000/users", {
+             method: "POST",
+             headers: {
+               "content-type": "application/json",
+             },
+             body: JSON.stringify(user),
+           })
+             .then((res) => res.json())
+             .then((savedData) => {
+               console.log(savedData);
+               createUser(data.email, data.password)
+                 .then((userCredential) => {
+                   // Signed in
+                   const user = userCredential.user;
+                   console.log(user);
+                   const userInfo = {
+                     displayName: data.name,
+                     photoURL: result.data.display_url,
+                   };
+                   updateUser(userInfo)
+                   console.log('updated')
+
+                   // ...
+                 })
+                 .catch((error) => {
+                   const errorCode = error.code;
+                   const errorMessage = error.message;
+                   // ..
+                 });
+             });
+         }
+      })
+      // createUser(data.email, data.password)
+      //   .then((userCredential) => {
+      //     // Signed in
+      //     const user = userCredential.user;
+      //     console.log(user)
+      //     const userInfo = {
+      //       displayName: data.name,
+      //       photoURL: result.data.display_url,
+      //     };
+      //     // ...
+      //   })
+      //   .catch((error) => {
+      //     const errorCode = error.code;
+      //     const errorMessage = error.message;
+      //     // ..
+      //   });
    }
    
 
@@ -129,12 +187,12 @@ const SignUp = () => {
                    </label>
                    <select
                      className="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md  focus:border-secondary  focus:ring-secondary focus:outline-none focus:ring focus:ring-opacity-40"
-                     {...register("category", { required: true })}
+                     {...register("role", { required: true })}
                    >
-                     <option selected value="User">
+                     <option selected value="user">
                        User
                      </option>
-                     <option value="Seller">Seller</option>
+                     <option value="seller">Seller</option>
                    </select>
                  </div>
 

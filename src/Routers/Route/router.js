@@ -6,6 +6,8 @@ import AllAdvertisements from "../../Pages/AllAdvertisements/AllAdvertisements";
 import WishLists from "../../Pages/WishLists/WishLists";
 import LogIn from "../../Pages/Login/LogIn/LogIn";
 import SignUp from "../../Pages/Login/SignUp/SignUp";
+import DashBoard from "../../Pages/DashBoard/DashBoard";
+import DashboardLayer from "../../Layer/DashboardLayer/DashboardLayer";
 
 const { createBrowserRouter } = require("react-router-dom");
 const { default: Main } = require("../../Layer/Main/Main");
@@ -64,4 +66,14 @@ export const router = createBrowserRouter([
 
     ],
   },
+  {
+    path:'/dashboard',
+    element:<DashboardLayer/>,
+    children:[
+      {
+        path:'/dashboard',
+        element:<DashBoard/>
+      }
+    ]
+  }
 ]);

@@ -1,5 +1,5 @@
 import React, { createContext, useEffect, useState } from 'react';
-import {createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut} from 'firebase/auth'
+import {createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut, updateProfile} from 'firebase/auth'
 import app from '../Firebase/Firebase.init';
 
 
@@ -20,6 +20,10 @@ const SharedContext = ({children}) => {
      return signInWithEmailAndPassword(auth, email, password);
    };
 
+   const updateUser = (profile) =>{
+      return updateProfile(auth.currentUser,profile);
+   }
+
 
    const logOut = () =>{
       return signOut(auth);
@@ -39,7 +43,7 @@ const SharedContext = ({children}) => {
 
 
 
-   const authInfo = { user, createUser, signInUser, logOut };
+   const authInfo = { user, createUser, signInUser, logOut, updateUser };
 
    return (
       
