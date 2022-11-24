@@ -36,13 +36,13 @@ const AllProducts = () => {
      <div className="flex justify-center space-x-1 text-gray-100 my-20">
          {[...Array(pages).keys()].map((number) => (
            <button
-             key={number+1}
+             key={number}
              type="button"
              title="Page 1"
              className="inline-flex items-center justify-center w-8 h-8 text-lg ml-3 font-semibold border rounded shadow-md bg-slate-100 text-secondary border-secondary"
              onClick={() => setPage(number)}
            >
-             {number}
+             {number+1}
            </button>
          ))}
        </div>
