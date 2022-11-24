@@ -1,32 +1,61 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 import img from "../../../Assets/Logo/Sofa.svg";
+import { authContext } from "../../../Context/SharedContext";
 
 const Header = () => {
+  const { user, logOut } = useContext(authContext);
 
+  const signOut = () => {
+    logOut()
+      .then(() => {
+        // Sign-out successful.
+      })
+      .catch((error) => {
+        // An error happened.
+      });
+  };
 
-  const menus = [
-    <li>
-      <Link to="/">Home</Link>
-    </li>,
-    <li>
-      <Link to="/allProducts/advertise">Advertise Products</Link>
-    </li>,
-    <li>
-      <Link to="/allproducts">Products</Link>
-    </li>,
-    <li>
-      <Link to="/carts">Cart</Link>
-    </li>,
-    <li>
-      <Link to="/wishlists">WishList</Link>
-    </li>,
-    <li>
-      <Link>Login</Link>
-    </li>,
-  ];
+  const menus = (
+    <>
+      <li>
+        <Link to="/">Home</Link>
+      </li>
 
+      <li>
+        <Link to="/allProducts/advertise">Advertise Products</Link>
+      </li>
 
+      <li>
+        <Link to="/allproducts">Products</Link>
+      </li>
+
+      {user?.uid ? (
+        <>
+          <li>
+            <Link to="/carts">Cart</Link>
+          </li>
+
+          <li>
+            <Link to="/wishlists">WishList</Link>
+          </li>
+          <li onClick={signOut}>
+            <Link>Logout</Link>
+          </li>
+        </>
+      ) : (
+        <>
+          <li>
+            <Link to="/login">Login</Link>
+          </li>
+
+          <li>
+            <Link to="/signup">SignUp</Link>
+          </li>
+        </>
+      )}
+    </>
+  );
 
   return (
     <div className="navbar bg-base-100">

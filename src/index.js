@@ -7,15 +7,18 @@ import {
   QueryClient,
   QueryClientProvider,
 } from "@tanstack/react-query";
+import SharedContext from './Context/SharedContext';
 
 const queryClient = new QueryClient();
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <QueryClientProvider client={queryClient}>
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
+    <SharedContext>
+      <React.StrictMode>
+        <App />
+      </React.StrictMode>
+    </SharedContext>
   </QueryClientProvider>
 );
 

@@ -4,6 +4,8 @@ import Carts from '../../Pages/Carts/Carts/Carts'
 import AllProducts from "../../Pages/Products/AllProducts/AllProducts";
 import AllAdvertisements from "../../Pages/AllAdvertisements/AllAdvertisements";
 import WishLists from "../../Pages/WishLists/WishLists";
+import LogIn from "../../Pages/Login/LogIn/LogIn";
+import SignUp from "../../Pages/Login/SignUp/SignUp";
 
 const { createBrowserRouter } = require("react-router-dom");
 const { default: Main } = require("../../Layer/Main/Main");
@@ -50,6 +52,14 @@ export const router = createBrowserRouter([
       {
         path:'/wishlists',
         element:<WishLists/>
+      },
+      {
+        path:'/login',
+        element:<LogIn/>
+      },
+      {
+        path:"/signup",
+        element:<SignUp/>
       }
 
     ],

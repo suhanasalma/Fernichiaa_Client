@@ -91,7 +91,7 @@ const Product = ({ product }) => {
             to="/carts"
             className="inline-block text-secondary underline hover:text-blue-400"
           >
-            Add To Cart
+            Book Now
           </Link>
           <Link
             to={`/productDetails/${_id}`}
