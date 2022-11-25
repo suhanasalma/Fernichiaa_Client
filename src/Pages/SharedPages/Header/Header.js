@@ -32,13 +32,9 @@ const Header = () => {
 
       {user?.uid ? (
         <>
-          <li>
-            <Link to="/carts">Cart</Link>
-          </li>
-
-          <li>
+          {/* <li>
             <Link to="/wishlists">WishList</Link>
-          </li>
+          </li> */}
           <li onClick={signOut}>
             <Link>Logout</Link>
           </li>

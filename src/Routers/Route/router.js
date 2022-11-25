@@ -1,6 +1,5 @@
 import ProductDetails from "../../Pages/Products/ProductDetails/ProductDetails";
 import Products from "../../Pages/Products/Products/Products";
-import Carts from '../../Pages/Carts/Carts/Carts'
 import AllProducts from "../../Pages/Products/AllProducts/AllProducts";
 import AllAdvertisements from "../../Pages/AllAdvertisements/AllAdvertisements";
 import WishLists from "../../Pages/WishLists/WishLists";
@@ -14,7 +13,7 @@ import MyBuyers from "../../Pages/DashBoard/MyBuyers/MyBuyers";
 import MyOrders from "../../Pages/DashBoard/MyOrders/MyOrders";
 import AddProducts from "../../Pages/DashBoard/AddProducts/AddProducts";
 import MyProducts from "../../Pages/DashBoard/MyProducts/MyProducts";
-
+import DashBoardWishlists from "../../Pages/DashBoard/DashBoardWishList/DashBoardWishlists";
 const { createBrowserRouter } = require("react-router-dom");
 const { default: Main } = require("../../Layer/Main/Main");
 const { default: Home } = require("../../Pages/Home/Home");
@@ -41,10 +40,6 @@ export const router = createBrowserRouter([
         element: <ProductDetails />,
       },
       {
-        path: "/carts",
-        element: <Carts />,
-      },
-      {
         path: "/allproducts",
         loader: () => fetch(`http://localhost:5000/allProducts`),
         element: <AllProducts />,
@@ -53,14 +48,10 @@ export const router = createBrowserRouter([
         path: "/allProducts/advertise",
         element: <AllAdvertisements />,
       },
-      {
-        path: "/carts",
-        element: <Carts />,
-      },
-      {
-        path: "/wishlists",
-        element: <WishLists />,
-      },
+      // {
+      //   path: "/wishlists",
+      //   element: <WishLists />,
+      // },
       {
         path: "/login",
         element: <LogIn />,
@@ -81,29 +72,32 @@ export const router = createBrowserRouter([
       },
       {
         path: "/dashboard/allsellers",
-        element:<AllSellers/>
+        element: <AllSellers />,
       },
       {
         path: "/dashboard/allbuyers",
-        element:<AllBuyers/>
+        element: <AllBuyers />,
       },
       {
         path: "/dashboard/mybuyers",
-        element:<MyBuyers/>
+        element: <MyBuyers />,
       },
       {
         path: "/dashboard/myorders",
-        element:<MyOrders/>
+        element: <MyOrders />,
       },
       {
         path: "/dashboard/addproducts",
-        element:<AddProducts/>
+        element: <AddProducts />,
       },
       {
         path: "/dashboard/myproducts",
-        element:<MyProducts/>
+        element: <MyProducts />,
       },
-
+      {
+        path: "/dashboard/wishlist",
+        element:<DashBoardWishlists></DashBoardWishlists>
+      },
     ],
   },
 ]);

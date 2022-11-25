@@ -128,7 +128,7 @@ const DashBoard = () => {
           </nav>
         </div>
       </div> */}
-      <h1>Dashboard</h1>
+      <h1>Welcome To DashBoard</h1>
     </div>
   );
 };
