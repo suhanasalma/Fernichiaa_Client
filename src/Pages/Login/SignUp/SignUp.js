@@ -41,54 +41,39 @@ const SignUp = () => {
              role: data.role,
              img: result.data.display_url,
            };
-           fetch("http://localhost:5000/users", {
-             method: "POST",
-             headers: {
-               "content-type": "application/json",
-             },
-             body: JSON.stringify(user),
-           })
-             .then((res) => res.json())
-             .then((savedData) => {
-               console.log(savedData);
-               createUser(data.email, data.password)
-                 .then((userCredential) => {
-                   // Signed in
-                   const user = userCredential.user;
-                   console.log(user);
-                   const userInfo = {
-                     displayName: data.name,
-                     photoURL: result.data.display_url,
-                   };
-                   updateUser(userInfo)
-                   console.log('updated')
-
-                   // ...
-                 })
-                 .catch((error) => {
-                   const errorCode = error.code;
-                   const errorMessage = error.message;
-                   // ..
+           createUser(data.email, data.password)
+             .then((userCredential) => {
+               // Signed in
+               const creatuser = userCredential.user;
+               console.log(creatuser);
+               const userInfo = {
+                 displayName: data.name,
+                 photoURL: result.data.display_url,
+               };
+               updateUser(userInfo);
+               console.log("updated");
+               fetch(`http://localhost:5000/users/${data.email}`, {
+                 //  method: "POST",
+                 method: "PUT",
+                 headers: {
+                   "content-type": "application/json",
+                 },
+                 body: JSON.stringify(user),
+               })
+                 .then((res) => res.json())
+                 .then((savedData) => {
+                   console.log(savedData);
                  });
+
+               // ...
+             })
+             .catch((error) => {
+               const errorCode = error.code;
+               const errorMessage = error.message;
+               // ..
              });
          }
       })
-      // createUser(data.email, data.password)
-      //   .then((userCredential) => {
-      //     // Signed in
-      //     const user = userCredential.user;
-      //     console.log(user)
-      //     const userInfo = {
-      //       displayName: data.name,
-      //       photoURL: result.data.display_url,
-      //     };
-      //     // ...
-      //   })
-      //   .catch((error) => {
-      //     const errorCode = error.code;
-      //     const errorMessage = error.message;
-      //     // ..
-      //   });
    }
    
 

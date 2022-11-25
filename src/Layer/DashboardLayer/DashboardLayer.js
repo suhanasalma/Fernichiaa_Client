@@ -1,11 +1,22 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link, Outlet } from "react-router-dom";
 import { authContext } from "../../Context/SharedContext";
 import Header from "../../Pages/SharedPages/Header/Header";
 
 const DashboardLayer = () => {
   const { user } = useContext(authContext);
-  console.log(user);
+  const [currentUser,serCurrentUser] = useState('')
+
+  useEffect(() => {
+    fetch(`http://localhost:5000/users?email=${user?.email}`)
+      .then((res) => res.json())
+      .then((data) => serCurrentUser(data));
+  }, [user?.email]);
+
+
+  // console.log(currentUser);
+
+
   return (
     <div>
       <Header></Header>
@@ -24,11 +35,19 @@ const DashboardLayer = () => {
             </h2>
 
             <div className="flex flex-col items-center mt-6 -mx-2">
-              <img
-                className="object-cover w-24 h-24 mx-2 rounded-full"
-                src={user?.photoURL}
-                alt="avatar"
-              />
+              {currentUser[0]?.isVarified? (
+                <div className="avatar online">
+                  <div className="object-cover w-24 h-24 mx-2 rounded-full">
+                    <img src={currentUser[0]?.img} />
+                  </div>
+                </div>
+              ) : (
+                <img
+                  className="object-cover object-center w-10 h-10 rounded-full"
+                  src={currentUser[0]?.img}
+                  alt=""
+                />
+              )}
               <h4 className="mx-2 mt-2 font-medium text-gray-800  hover:underline">
                 {user?.displayName}
               </h4>
@@ -150,6 +169,28 @@ const DashboardLayer = () => {
                   </svg>
 
                   <span className="mx-4 font-medium">My Orders</span>
+                </Link>
+                <Link
+                  to="/dashboard/myproducts"
+                  className="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform hover:bg-gray-200  hover:text-gray-700"
+                  href="#"
+                >
+                  <svg
+                    className="w-5 h-5"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M15 5V7M15 11V13M15 17V19M5 5C3.89543 5 3 5.89543 3 7V10C4.10457 10 5 10.8954 5 12C5 13.1046 4.10457 14 3 14V17C3 18.1046 3.89543 19 5 19H19C20.1046 19 21 18.1046 21 17V14C19.8954 14 19 13.1046 19 12C19 10.8954 19.8954 10 21 10V7C21 5.89543 20.1046 5 19 5H5Z"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    />
+                  </svg>
+
+                  <span className="mx-4 font-medium">My Products</span>
                 </Link>
                 <Link
                   to="/dashboard/addproducts"

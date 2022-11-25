@@ -13,6 +13,7 @@ import AllBuyers from "../../Pages/DashBoard/AllBuyers/AllBuyers";
 import MyBuyers from "../../Pages/DashBoard/MyBuyers/MyBuyers";
 import MyOrders from "../../Pages/DashBoard/MyOrders/MyOrders";
 import AddProducts from "../../Pages/DashBoard/AddProducts/AddProducts";
+import MyProducts from "../../Pages/DashBoard/MyProducts/MyProducts";
 
 const { createBrowserRouter } = require("react-router-dom");
 const { default: Main } = require("../../Layer/Main/Main");
@@ -97,6 +98,10 @@ export const router = createBrowserRouter([
       {
         path: "/dashboard/addproducts",
         element:<AddProducts/>
+      },
+      {
+        path: "/dashboard/myproducts",
+        element:<MyProducts/>
       },
 
     ],
