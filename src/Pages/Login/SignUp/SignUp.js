@@ -3,6 +3,7 @@ import img from '../../../Assets/logUp/1.jpg'
 import { useForm } from "react-hook-form";
 import { authContext } from '../../../Context/SharedContext';
 import { Link } from 'react-router-dom';
+import useToken from '../../../Hooks/useToken';
 
 const SignUp = () => {
    const {
@@ -10,6 +11,10 @@ const SignUp = () => {
      handleSubmit,
      formState: { errors },
    } = useForm();
+
+   const [createdEmail,setCreatedEmail] = useState('')
+
+   const [token] = useToken(createdEmail);
    
 
 
@@ -101,6 +106,8 @@ const SignUp = () => {
                  .then((res) => res.json())
                  .then((savedData) => {
                    console.log(savedData);
+                   setCreatedEmail(data.email);
+
                  });
 
                // ...
@@ -113,6 +120,17 @@ const SignUp = () => {
          }
       })
    }
+
+  //  const getUserToken = email =>{
+  //   fetch(`http://localhost:5000/jwt?email=${email}`)
+  //   .then(res=>res.json())
+  //   .then(data=>{
+  //     if(data.accessToken){
+  //       localStorage.setItem('furniture-token',data.accessToken)
+
+  //     }
+  //   })
+  //  }
    
 
 

@@ -28,7 +28,10 @@ const EditModal = ({ modalInfo }) => {
         })
         .then(res=>res.json())
         .then(data=>{
+          
          console.log(data)
+              //  alert("successfully updated");
+
         })
 
    }

@@ -2,7 +2,6 @@ import ProductDetails from "../../Pages/Products/ProductDetails/ProductDetails";
 import Products from "../../Pages/Products/Products/Products";
 import AllProducts from "../../Pages/Products/AllProducts/AllProducts";
 import AllAdvertisements from "../../Pages/AllAdvertisements/AllAdvertisements";
-import WishLists from "../../Pages/WishLists/WishLists";
 import LogIn from "../../Pages/Login/LogIn/LogIn";
 import SignUp from "../../Pages/Login/SignUp/SignUp";
 import DashBoard from "../../Pages/DashBoard/DashBoard";

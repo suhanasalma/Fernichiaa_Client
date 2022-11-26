@@ -1,23 +1,33 @@
 import React, { useContext, useEffect, useState } from "react";
 import { authContext } from "../../../Context/SharedContext";
 import { useForm } from "react-hook-form";
+import { useQuery } from "@tanstack/react-query";
 
 const AddProducts = () => {
   const { user } = useContext(authContext);
-  const [receneUser, setRecentUser] = useState("");
+  // const [receneUser, setRecentUser] = useState("");
   const { register, handleSubmit } = useForm();
     const imageHostKey = process.env.REACT_APP_imgbb_key;
 
   //   console.log(user)
 
-  useEffect(() => {
-    fetch(`http://localhost:5000/users/${user?.email}`)
-      .then((res) => res.json())
-      .then((data) => {
-        // console.log(data)
-        setRecentUser(data);
-      });
-  }, [user?.email]);
+  // useEffect(() => {
+  //   fetch(`http://localhost:5000/users/${user?.email}`)
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       // console.log(data)
+  //       setRecentUser(data);
+  //     });
+  // }, [user?.email]);
+
+
+    const { data: receneUser ='' } = useQuery({
+      queryKey: ["users", user?.email],
+      queryFn: () =>
+        fetch(`http://localhost:5000/users/${user?.email}`).then((res) =>
+          res.json()
+        ),
+    });
 
   console.log(receneUser);
 
@@ -35,21 +45,21 @@ const AddProducts = () => {
       console.log(result);
       if (result.success) {
          const product = {
-      categoryId: parseInt(data.categoryName.split(',')[1]),
-      categoryName: data.categoryName.split(',')[0],
-      title: data.title,
-      newPrice: parseInt(data.newPrice),
-      oldPrice: parseInt(data.oldPrice),
-      details: data.details,
-      location: data.location,
-      boughtYear: parseInt(data.boughtYear),
-      img: result.data.display_url,
-      sellerName: receneUser.name,
-      sellerEmail: receneUser.email,
-      sellerImg: receneUser.img,
-      postedTime:new Date().toISOString(),
-      
-    };
+           categoryId: parseInt(data.categoryName.split(",")[1]),
+           categoryName: data.categoryName.split(",")[0],
+           title: data.title,
+           newPrice: parseInt(data.newPrice),
+           oldPrice: parseInt(data.oldPrice),
+           details: data.details,
+           location: data.location,
+           boughtYear: parseInt(data.boughtYear),
+           img: result.data.display_url,
+           sellerName: receneUser.name,
+           sellerEmail: receneUser.email,
+           sellerImg: receneUser.img,
+           sellerPhone: receneUser.phone,
+           postedTime: new Date().toISOString(),
+         };
     fetch("http://localhost:5000/allProducts", {
       //  method: "POST",
       method: "POST",
@@ -62,6 +72,7 @@ const AddProducts = () => {
       .then((successdata) => {
         console.log(successdata);
         console.log('updated')
+        alert('successfully added')
       });
          
       }

@@ -1,7 +1,8 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { authContext } from "../../../Context/SharedContext";
+import useToken from "../../../Hooks/useToken";
 
 const LogIn = () => {
    const {
@@ -10,6 +11,8 @@ const LogIn = () => {
      formState: { errors },
    } = useForm();
    const { signInUser, } = useContext(authContext);
+   const [loginEmail,setLoginEmail] = useState('')
+   const [token] = useToken(loginEmail)
 
    const handleInfo = (data) =>{
       console.log(data)
@@ -17,6 +20,7 @@ const LogIn = () => {
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
+        setLoginEmail(data.email)
         // ...
       }).catch((error) => {
         const errorCode = error.code;

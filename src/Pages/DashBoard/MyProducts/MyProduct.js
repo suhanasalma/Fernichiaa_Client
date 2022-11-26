@@ -3,7 +3,7 @@ import React from 'react';
 const MyProduct = ({
   item,
   handleDeleteProduct,
-
+  handleEditItem,
   handleAdvertise,
   setModalInfo,
 }) => {
@@ -27,6 +27,9 @@ const MyProduct = ({
       <th>
         <label>{paid ? "Sold" : "Not Sold"}</label>
       </th>
+      <th>
+        <label>{advertised ? "Boosting" : "Boost"}</label>
+      </th>
       <td>
         <div className="flex items-center space-x-3">
           <div className="avatar">
@@ -42,7 +45,7 @@ const MyProduct = ({
       </td>
       <td>{categoryName}</td>
       <td>{postedTime?.split("T")[0]}</td>
-      <td>{newPrice} $</td>
+      <td>{newPrice}</td>
       <th>
         <button
           onClick={() => handleDeleteProduct(item)}
@@ -62,9 +65,9 @@ const MyProduct = ({
       </th>
       <th>
         <label
-          onClick={()=>setModalInfo(item)}
+          onClick={() => setModalInfo(item)}
           // onClick={() => handleEditItem(item)}
-          disabled={advertised}
+          // disabled={advertised}
           htmlFor="my-modal-3"
           className=" btn btn-xs"
         >

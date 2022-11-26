@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useLoaderData } from "react-router-dom";
+import BookingModal from "../BookingModal/BookingModal";
 import Product from "../Product/Product";
 
 const AllProducts = () => {
@@ -8,6 +9,7 @@ const AllProducts = () => {
   const [count, setCount] = useState(0);
   const [page, setPage] = useState(0);
   const limit = 6;
+  const [modalInfo,setModalInfo] = useState('')
   // const page =count/limit
 
   useEffect(() => {
@@ -31,7 +33,11 @@ const AllProducts = () => {
       </div>
       <div className="grid grid-cols-1 gap-8 md:grid-cols-2 xl:grid-cols-3 my-20">
         {allProducts?.map((product) => (
-          <Product key={product._id} product={product}></Product>
+          <Product
+            setModalInfo={setModalInfo}
+            key={product._id}
+            product={product}
+          ></Product>
         ))}
         {/* <h1>{page}</h1> */}
       </div>
@@ -48,6 +54,7 @@ const AllProducts = () => {
           </button>
         ))}
       </div>
+      <BookingModal modalInfo={modalInfo} />
     </>
   );
 };

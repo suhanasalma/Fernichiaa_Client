@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useLoaderData } from "react-router-dom";
-import BookingModal from "../../BookingModal/BookingModal";
 import Product from "../Product/Product";
 
 
 const Products = () => {
   const products = useLoaderData();
-  //  const [modaInfo, setModaInfo] = useState('');
 
 
 
@@ -27,7 +25,6 @@ const Products = () => {
           </div>
         </div>
       </section>
-      {/* <BookingModal  /> */}
     </div>
   );
 };

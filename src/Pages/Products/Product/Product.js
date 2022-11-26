@@ -1,12 +1,13 @@
 import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { authContext } from "../../../Context/SharedContext";
-import BookingModal from "../../BookingModal/BookingModal";
+  import { toast } from "react-toastify";
 
 
-const Product = ({ product}) => {
-  const {user} = useContext(authContext)
-  const [modalInfo, setModalInfo] = useState('');
+
+const Product = ({ product, setModalInfo }) => {
+  const { user } = useContext(authContext);
+
   const {
     categoryName,
     title,
@@ -22,19 +23,14 @@ const Product = ({ product}) => {
     postedTime,
     isVarified,
     categoryId,
-    sellerEmail
+    sellerEmail,
   } = product;
-
-
-
 
   // console.log(product.wishlist)
 
-  
   //
 
   const handleWishList = () => {
-
     const wishlist = {
       categoryName,
       categoryId,
@@ -47,7 +43,7 @@ const Product = ({ product}) => {
       img,
       sellerImg,
       wishingEmail: user?.email,
-      productCode:_id
+      productCode: _id,
     };
     // console.log("added");
     fetch("http://localhost:5000/wishlists", {
@@ -55,6 +51,7 @@ const Product = ({ product}) => {
       method: "POST",
       headers: {
         "content-type": "application/json",
+        
       },
       body: JSON.stringify(wishlist),
     })
@@ -62,15 +59,15 @@ const Product = ({ product}) => {
       .then((data) => {
         console.log(data);
         fetch(`http://localhost:5000/allProducts/${_id}`, {
-      method: "PUT",
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        console.log(data);
-        
+          method: "PUT",
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data);
+            toast("added to wishlist");
+          });
       });
-      });
-  //   
+    //
   };
 
   return (
@@ -136,8 +133,8 @@ const Product = ({ product}) => {
             </div>
           </div>
           <label
-            htmlFor="bookModal"
             onClick={() => setModalInfo(product)}
+            htmlFor="my-modal-4"
             className="inline-block text-secondary underline hover:text-blue-400"
           >
             Book Now
@@ -150,7 +147,6 @@ const Product = ({ product}) => {
           </Link>
         </div>
       </div>
-      <BookingModal modalInfo={modalInfo} />
     </div>
   );
 };

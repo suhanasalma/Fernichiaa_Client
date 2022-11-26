@@ -1,3 +1,4 @@
+import { useQuery } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import Product from "../../../Products/Product/Product";
@@ -6,16 +7,21 @@ const Advertisements = () => {
   const [adervertises, setAdvertised] = useState([]);
 
   useEffect(() => {
-    fetch(
-      'http://localhost:5000/allProducts/advertise'
-    )
+    fetch("http://localhost:5000/allProducts/advertise")
       .then((res) => res.json())
       .then((data) => {
         //  console.log(data)
-         setAdvertised(data.result)
+        setAdvertised(data.result);
       });
   }, []);
 
+  // const { data: adervertises = [] } = useQuery({
+  //   queryKey: ["users"],
+  //   queryFn: () =>
+  //     fetch("http://localhost:5000/allProducts/advertise").then((res) =>
+  //       res.json()
+  //     ),
+  // });
 
   return (
     <div className="">

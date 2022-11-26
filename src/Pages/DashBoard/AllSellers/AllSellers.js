@@ -1,20 +1,29 @@
+import { useQuery } from '@tanstack/react-query';
 import React, {  useContext, useEffect, useState } from 'react';
 import { authContext } from '../../../Context/SharedContext';
 import Seller from './Seller';
 
 const AllSellers = () => {
-   const [allSellers,setAllSeller] = useState()
+  //  const [allSellers,setAllSeller] = useState()
    const {userDelete} = useContext(authContext)
 
-   useEffect(()=>{
-      fetch("http://localhost:5000/users?role=seller")
-      .then(res=>res.json())
-      .then(data=>{
-         // console.log(data)
-         setAllSeller(data)
-      })
+  //  useEffect(()=>{
+  //     fetch("http://localhost:5000/users?role=seller")
+  //     .then(res=>res.json())
+  //     .then(data=>{
+  //        // console.log(data)
+  //        setAllSeller(data)
+  //     })
 
-   },[])
+  //  },[])
+
+    const { data: allSellers = [] } = useQuery({
+      queryKey: ["users"],
+      queryFn: () =>
+        fetch("http://localhost:5000/users?role=seller").then((res) =>
+          res.json()
+        ),
+    });
 
     const handleDeleteUser = (user) => {
       console.log(user);

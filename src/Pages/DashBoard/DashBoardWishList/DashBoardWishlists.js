@@ -1,3 +1,4 @@
+import { useQuery } from '@tanstack/react-query';
 import React, { useContext, useEffect, useState } from 'react';
 import { authContext } from '../../../Context/SharedContext';
 import DashBoardWishList from './DashBoardWishList';
@@ -8,13 +9,24 @@ const DashBoardWishlists = () => {
    console.log(user)
 
    useEffect(() => {
-     fetch(`http://localhost:5000/wishlists?email=${user?.email}`)
+     fetch(`http://localhost:5000/wishlists?email=${user?.email}`,{
+      headers: {authorization: `bearer ${localStorage.getItem("furniture-token")}`},
+     })
        .then((res) => res.json())
        .then((data) => {
          console.log(data);
          setWishlists(data);
        });
    }, [user?.email]);
+
+    //  const { data: wishlists=[] } = useQuery({
+    //    queryKey: ["users", user?.email],
+    //    queryFn: () =>
+    //      fetch(`http://localhost:5000/wishlists?email/${user?.email}`).then(
+    //        (res) => res.json()
+    //      ),
+    //  });
+
 
   //  console.log(wishlists);
 
