@@ -1,10 +1,12 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { authContext } from '../../../Context/SharedContext';
+import EditModal from './EditModal';
 import MyProduct from './MyProduct';
 
 const MyProducts = () => {
    const [myProducts,setMyProducts] = useState([])
    const {user} = useContext(authContext)
+   const [modalInfo,setModalInfo] = useState(null)
 
    useEffect(()=>{
       fetch(`http://localhost:5000/sellProducts/${user?.email}`)
@@ -18,6 +20,22 @@ const MyProducts = () => {
         );
 
    })
+
+
+   const handleDeleteProduct = (deleteItem) =>{
+      console.log(deleteItem);
+   }
+
+   const handleAdvertise = (adData) =>{
+
+      console.log(adData);
+   }
+
+
+
+
+
+
    return (
      <div>
        <div className="bg-info h-40 flex justify-center items-center text-3xl my-10">
@@ -41,10 +59,17 @@ const MyProducts = () => {
            </thead>
            <tbody>
              {myProducts?.map((item) => (
-               <MyProduct key={item._id} item={item}/>
+               <MyProduct
+                 key={item._id}
+                 handleAdvertise={handleAdvertise}
+                 handleDeleteProduct={handleDeleteProduct}
+                 setModalInfo={setModalInfo}
+                 item={item}
+               />
              ))}
            </tbody>
          </table>
+         {modalInfo && <EditModal modalInfo={modalInfo} />}
        </div>
      </div>
    );
