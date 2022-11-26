@@ -13,12 +13,12 @@ const AllAdvertisements = () => {
       )
         .then((res) => res.json())
         .then((data) => {
-         console.log(data)
+        //  console.log(data)
           setAllProducts(data.result);
           setCount(data.count);
         });
     }, [page, limit]);
-    console.log(allProducts);
+    // console.log(allProducts);
 
     const pages = Math.ceil(count / limit);
 

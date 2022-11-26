@@ -6,18 +6,20 @@ import Header from "../../Pages/SharedPages/Header/Header";
 const DashboardLayer = () => {
   const { user } = useContext(authContext);
   const [currentUser,serCurrentUser] = useState([])
+  const [loading,setLoading] = useState(true)
  
 
     useEffect(() => {
-      fetch(`http://localhost:5000/users?email=${user?.email}`)
+      fetch(`http://localhost:5000/users/${user?.email}`)
         .then((res) => res.json())
         .then((data) => {
           serCurrentUser(data);
+          setLoading(false)
         });
     }, [user?.email]);
 
 
-  console.log(currentUser[0]);
+
 
 
   return (
@@ -38,24 +40,24 @@ const DashboardLayer = () => {
             </h2>
 
             <div className="flex flex-col items-center mt-6 -mx-2">
-              {currentUser[0]?.isVarified ? (
+              {currentUser?.isVarified ? (
                 <div className="avatar online">
                   <div className="object-cover w-24 h-24 mx-2 rounded-full">
-                    <img src={currentUser[0]?.img} />
+                    <img src={currentUser?.img} />
                   </div>
                 </div>
               ) : (
                 <img
-                  className="object-cover object-center w-10 h-10 rounded-full"
-                  src={currentUser[0]?.img}
+                  className="object-cover w-24 h-24 mx-2 rounded-full"
+                  src={currentUser?.img}
                   alt=""
                 />
               )}
               <h4 className="mx-2 mt-2 font-medium text-gray-800  hover:underline">
-                {user?.displayName}
+                {currentUser?.name}
               </h4>
               <p className="mx-2 mt-1 text-sm font-medium text-gray-600  hover:underline">
-                {user?.email}
+                {currentUser?.email}
               </p>
               {/* <p className="mx-2 mt-1 text-sm font-medium text-gray-600  hover:underline">
                 {user?.email}
@@ -64,67 +66,67 @@ const DashboardLayer = () => {
 
             <div className="flex flex-col justify-between flex-1 mt-6">
               <nav>
-                {/* {currentUser[0].role === "admin" && ( */}
-                  <>
-                    <Link
-                      to="/dashboard/allbuyers"
-                      className="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform  hover:bg-gray-200   hover:text-gray-700"
-                      href="#"
+                {/* {currentUser[0]?.role === "admin" && ( */}
+                <>
+                  <Link
+                    to="/dashboard/allbuyers"
+                    className="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform  hover:bg-gray-200   hover:text-gray-700"
+                    href="#"
+                  >
+                    <svg
+                      className="w-5 h-5"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
                     >
-                      <svg
-                        className="w-5 h-5"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M16 7C16 9.20914 14.2091 11 12 11C9.79086 11 8 9.20914 8 7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7Z"
-                          stroke="currentColor"
-                          stroke-width="2"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                        />
-                        <path
-                          d="M12 14C8.13401 14 5 17.134 5 21H19C19 17.134 15.866 14 12 14Z"
-                          stroke="currentColor"
-                          stroke-width="2"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                        />
-                      </svg>
+                      <path
+                        d="M16 7C16 9.20914 14.2091 11 12 11C9.79086 11 8 9.20914 8 7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7Z"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                      <path
+                        d="M12 14C8.13401 14 5 17.134 5 21H19C19 17.134 15.866 14 12 14Z"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
 
-                      <span className="mx-4 font-medium">All Buyers</span>
-                    </Link>
+                    <span className="mx-4 font-medium">All Buyers</span>
+                  </Link>
 
-                    <Link
-                      to="/dashboard/allsellers"
-                      className="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform  hover:bg-gray-200   hover:text-gray-700"
+                  <Link
+                    to="/dashboard/allsellers"
+                    className="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform  hover:bg-gray-200   hover:text-gray-700"
+                  >
+                    <svg
+                      className="w-5 h-5"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
                     >
-                      <svg
-                        className="w-5 h-5"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M16 7C16 9.20914 14.2091 11 12 11C9.79086 11 8 9.20914 8 7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7Z"
-                          stroke="currentColor"
-                          stroke-width="2"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                        />
-                        <path
-                          d="M12 14C8.13401 14 5 17.134 5 21H19C19 17.134 15.866 14 12 14Z"
-                          stroke="currentColor"
-                          stroke-width="2"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                        />
-                      </svg>
+                      <path
+                        d="M16 7C16 9.20914 14.2091 11 12 11C9.79086 11 8 9.20914 8 7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7Z"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                      <path
+                        d="M12 14C8.13401 14 5 17.134 5 21H19C19 17.134 15.866 14 12 14Z"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      />
+                    </svg>
 
-                      <span className="mx-4 font-medium">All Sellers</span>
-                    </Link>
-                  </>
+                    <span className="mx-4 font-medium">All Sellers</span>
+                  </Link>
+                </>
                 {/* )} */}
                 <Link
                   to="/dashboard/wishlist"
@@ -170,7 +172,7 @@ const DashboardLayer = () => {
 
                   <span className="mx-4 font-medium">My Orders</span>
                 </Link>
-                {/* {currentUser[0]?.role === "seller" && ( */}
+                {/* {currentUser?.role === "seller" && ( */}
                   <>
                     <Link
                       to="/dashboard/mybuyers"

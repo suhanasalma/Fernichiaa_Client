@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Buyer = ({ item }) => {
+const Buyer = ({ item, handleDeleteUser }) => {
   const { name, address, age, email, img, isVarified, phone } = item;
   return (
     <tr>
@@ -20,7 +20,9 @@ const Buyer = ({ item }) => {
       <td>{email}</td>
       <td>{phone}</td>
       <th>
-        <button className="btn btn-xs">X</button>
+        <button onClick={() => handleDeleteUser(item)} className="btn btn-xs">
+          X
+        </button>
       </th>
     </tr>
   );

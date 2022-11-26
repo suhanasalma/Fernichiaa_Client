@@ -1,8 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { authContext } from "../../../Context/SharedContext";
 import Buyer from "./Buyer";
 
 const AllBuyers = () => {
       const [allbuyer, setAllBuyer] = useState();
+      const {userDelete} = useContext(authContext)
 
       useEffect(() => {
         fetch("http://localhost:5000/users?role=user")
@@ -12,6 +14,27 @@ const AllBuyers = () => {
             setAllBuyer(data);
           });
       }, []);
+
+
+      const handleDeleteUser = (user) =>{
+        console.log(user)
+        fetch(`http://localhost:5000/users/${user._id}`, {
+          method: "DELETE",
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log("delete", data);
+            userDelete()
+              .then(() => {
+                // User deleted.
+                console.log('user deleted')
+              })
+              .catch((error) => {
+                // An error ocurred
+                // ...
+              });
+          });
+      }
 
 
    return (
@@ -33,7 +56,11 @@ const AllBuyers = () => {
            </thead>
            <tbody>
              {allbuyer?.map((item) => (
-               <Buyer item={item}></Buyer>
+               <Buyer
+                 handleDeleteUser={handleDeleteUser}
+                 key={item._id}
+                 item={item}
+               ></Buyer>
              ))}
            </tbody>
          </table>

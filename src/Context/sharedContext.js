@@ -1,5 +1,5 @@
 import React, { createContext, useEffect, useState } from 'react';
-import {createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword, signOut, updateProfile} from 'firebase/auth'
+import {createUserWithEmailAndPassword, deleteUser, getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut, updateProfile} from 'firebase/auth'
 import app from '../Firebase/Firebase.init';
 
 
@@ -8,8 +8,11 @@ const auth = getAuth(app)
 export const authContext = createContext()
 
 
+
 const SharedContext = ({children}) => {
    const [user,setUser] = useState()
+
+   const googleAuth = new GoogleAuthProvider()
 
 
    const createUser = (email,password) =>{
@@ -22,6 +25,15 @@ const SharedContext = ({children}) => {
 
    const updateUser = (profile) =>{
       return updateProfile(auth.currentUser,profile);
+   }
+
+   const userDelete = ()=>{
+      return deleteUser(auth.currentUser)
+   }
+
+   const createGoogleUser = () =>{
+      return signInWithPopup(auth, googleAuth)
+        
    }
 
 
@@ -43,7 +55,15 @@ const SharedContext = ({children}) => {
 
 
 
-   const authInfo = { user, createUser, signInUser, logOut, updateUser };
+   const authInfo = {
+     user,
+     createUser,
+     signInUser,
+     logOut,
+     updateUser,
+     userDelete,
+     createGoogleUser,
+   };
 
    return (
       

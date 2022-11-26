@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const DashBoardWishList = ({ wishlist }) => {
   const {
@@ -14,11 +15,46 @@ const DashBoardWishList = ({ wishlist }) => {
     details,
     _id,
     postedTime,
+    productCode,
   } = wishlist;
+
+  const handleDeleteWishList = data =>{
+    console.log(data.productCode);
+     fetch(`http://localhost:5000/removeWishlist/${data.productCode}`, {
+       method: "put",
+     })
+       .then((res) => res.json())
+       .then((data) => {
+         console.log(data);
+        
+       });
+
+        fetch(`http://localhost:5000/wishlists/${data._id}`, {
+          method: "delete",
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data);
+          });
+
+
+    
+
+
+
+    
+  }
+
+
   return (
     <tr>
       <th>
-        <button className="btn btn-xs">X</button>
+        <button
+          onClick={() => handleDeleteWishList(wishlist)}
+          className="btn btn-xs"
+        >
+          X
+        </button>
       </th>
       <td>
         <div className="flex items-center space-x-3">
@@ -44,7 +80,9 @@ const DashBoardWishList = ({ wishlist }) => {
         <button className="btn btn-xs">Book Now</button>
       </th>
       <th>
-        <button className="btn btn-xs">See Deatils</button>
+        <Link to={`/productDetails/${productCode}`}>
+          <button className="btn btn-xs">See Deatils</button>
+        </Link>
       </th>
     </tr>
   );

@@ -1,19 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { authContext } from '../../../Context/SharedContext';
 import DashBoardWishList from './DashBoardWishList';
 
 const DashBoardWishlists = () => {
    const [wishlists, setWishlists] = useState([]);
+   const {user} = useContext(authContext)
+   console.log(user)
 
    useEffect(() => {
-     fetch("http://localhost:5000/allProducts/wishlists")
+     fetch(`http://localhost:5000/wishlists?email=${user?.email}`)
        .then((res) => res.json())
        .then((data) => {
          console.log(data);
          setWishlists(data);
        });
-   }, []);
+   }, [user?.email]);
 
-   console.log(wishlists);
+  //  console.log(wishlists);
 
    return (
      <div className="mb-20">

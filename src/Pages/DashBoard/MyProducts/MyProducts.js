@@ -11,7 +11,7 @@ const MyProducts = () => {
         .then((res) => res.json())
         .then(
           (data) => {
-            console.log(data);
+            // console.log(data);
             setMyProducts(data);
           },
           [user?.email]
@@ -41,7 +41,7 @@ const MyProducts = () => {
            </thead>
            <tbody>
              {myProducts?.map((item) => (
-               <MyProduct item={item}/>
+               <MyProduct key={item._id} item={item}/>
              ))}
            </tbody>
          </table>

@@ -11,7 +11,7 @@ const AddProducts = () => {
   //   console.log(user)
 
   useEffect(() => {
-    fetch(`http://localhost:5000/users?email=${user?.email}`)
+    fetch(`http://localhost:5000/users/${user?.email}`)
       .then((res) => res.json())
       .then((data) => {
         // console.log(data)
@@ -19,7 +19,7 @@ const AddProducts = () => {
       });
   }, [user?.email]);
 
-//   console.log(receneUser[0]);
+  console.log(receneUser);
 
   const handleAddProducts = (data) => {
    const img = data.img[0];
@@ -44,9 +44,9 @@ const AddProducts = () => {
       location: data.location,
       boughtYear: parseInt(data.boughtYear),
       img: result.data.display_url,
-      sellerName: receneUser[0].name,
-      sellerEmail: receneUser[0].email,
-      sellerImg: receneUser[0].img,
+      sellerName: receneUser.name,
+      sellerEmail: receneUser.email,
+      sellerImg: receneUser.img,
       postedTime:new Date().toISOString(),
       
     };
@@ -90,7 +90,7 @@ const AddProducts = () => {
               <input
                 {...register("sellerName")}
                 //  placeholder={receneUser[0]?.name}
-                value={receneUser[0]?.name}
+                value={receneUser.name}
                 readOnly
                 required
                 //  placeholder={receneUser?.name}
@@ -109,7 +109,7 @@ const AddProducts = () => {
               </label>
               <input
                 {...register("sellerEmail")}
-                value={receneUser[0]?.email}
+                value={receneUser?.email}
                 readOnly
                 required
                 id="emailAddress"
@@ -123,7 +123,7 @@ const AddProducts = () => {
                 Age
               </label>
               <input
-                value={receneUser[0]?.age}
+                value={receneUser?.age}
                 readOnly
                 required
                 id="age"
@@ -140,7 +140,7 @@ const AddProducts = () => {
                 Phone
               </label>
               <input
-                value={receneUser[0]?.phone}
+                value={receneUser?.phone}
                 readOnly
                 required
                 id="phone"
@@ -154,7 +154,7 @@ const AddProducts = () => {
               </label>
               <input
                 {...register("role")}
-                value={receneUser[0]?.role}
+                value={receneUser?.role}
                 readOnly
                 required
                 id="role"
@@ -171,7 +171,7 @@ const AddProducts = () => {
                 Address
               </label>
               <input
-                value={receneUser[0]?.address}
+                value={receneUser?.address}
                 readOnly
                 required
                 id="address"
@@ -188,7 +188,7 @@ const AddProducts = () => {
               </label>
               <input
                 {...register("sellerImg")}
-                value={receneUser[0]?.img}
+                value={receneUser?.img}
                 readOnly
                 required
                 id="img"
