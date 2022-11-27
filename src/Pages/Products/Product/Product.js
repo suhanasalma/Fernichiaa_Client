@@ -2,11 +2,29 @@ import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { authContext } from "../../../Context/SharedContext";
   import { toast } from "react-toastify";
+import { useQuery } from "@tanstack/react-query";
+import Loading from "../../../Loading/Loading";
 
 
 
 const Product = ({ product, setModalInfo }) => {
   const { user } = useContext(authContext);
+
+  const { data: currentUser = [], isLoading,refetch } = useQuery({
+    queryKey: ["currentUser", user?.email],
+    queryFn: () =>
+      fetch(`http://localhost:5000/users/${user?.email}`).then((res) =>
+        res.json()
+      ),
+  });
+
+
+
+
+
+  if(isLoading){
+    return <Loading></Loading>
+  }
 
   const {
     categoryName,
@@ -24,11 +42,8 @@ const Product = ({ product, setModalInfo }) => {
     isVarified,
     categoryId,
     sellerEmail,
+    sellerPhone
   } = product;
-
-  // console.log(product.wishlist)
-
-  //
 
   const handleWishList = () => {
     const wishlist = {
@@ -42,33 +57,30 @@ const Product = ({ product, setModalInfo }) => {
       location,
       img,
       sellerImg,
-      wishingEmail: user?.email,
+       sellerPhone,
+      wishingEmail: currentUser?.email,
       productCode: _id,
     };
-    // console.log("added");
-    fetch("http://localhost:5000/wishlists", {
+
+    fetch("http://localhost:5000/addwishlists", {
       //  method: "POST",
       method: "POST",
       headers: {
         "content-type": "application/json",
-        
       },
       body: JSON.stringify(wishlist),
     })
       .then((res) => res.json())
       .then((data) => {
+        refetch();
         console.log(data);
-        fetch(`http://localhost:5000/allProducts/${_id}`, {
-          method: "PUT",
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            console.log(data);
-            toast("added to wishlist");
-          });
+        toast("product added to wishlist");
+        
       });
-    //
+    
   };
+
+
 
   return (
     <div className="shadow-2xl rounded-lg p-6">
@@ -81,9 +93,9 @@ const Product = ({ product, setModalInfo }) => {
       <div className="mt-8">
         <div className="flex justify-between">
           <button
-            disabled={product?.wishlist}
+            disabled={product?.wishlist || product?.booked}
             onClick={handleWishList}
-            className="btn text-secondary uppercase underline"
+            className="btn text-secondary uppercase"
           >
             WishList
           </button>
@@ -133,9 +145,10 @@ const Product = ({ product, setModalInfo }) => {
             </div>
           </div>
           <label
+            disabled={product?.booked}
             onClick={() => setModalInfo(product)}
             htmlFor="my-modal-4"
-            className="inline-block text-secondary underline hover:text-blue-400"
+            className="btn text-secondary uppercase"
           >
             Book Now
           </label>

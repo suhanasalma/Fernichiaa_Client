@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useLoaderData } from "react-router-dom";
+import BookingModal from "../BookingModal/BookingModal";
 import Product from "../Product/Product";
+
 
 
 const Products = () => {
   const products = useLoaderData();
+    const [modalInfo, setModalInfo] = useState("");
 
 
 
@@ -20,11 +23,16 @@ const Products = () => {
           <hr class="my-8 border-gray-200 dark:border-gray-700" />
           <div class="grid grid-cols-1 gap-8 md:grid-cols-2 xl:grid-cols-3">
             {products.map((product) => (
-              <Product key={product._id} product={product}></Product>
+              <Product
+                setModalInfo={setModalInfo}
+                key={product._id}
+                product={product}
+              ></Product>
             ))}
           </div>
         </div>
       </section>
+      <BookingModal modalInfo={modalInfo} />
     </div>
   );
 };

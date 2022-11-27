@@ -29,7 +29,7 @@ export const router = createBrowserRouter([
       {
         path: "/categories/:id",
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/categories/${params.id}`),
+          fetch(`http://localhost:5000/categories/products/${params.id}`),
         element: <Products />,
       },
       {
@@ -40,7 +40,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/allproducts",
-        loader: () => fetch(`http://localhost:5000/allProducts`),
+        // loader: () => fetch(`http://localhost:5000/allProducts`),
         element: <AllProducts />,
       },
       {
@@ -95,7 +95,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/dashboard/wishlist",
-        element:<DashBoardWishlists></DashBoardWishlists>
+        element: <DashBoardWishlists></DashBoardWishlists>,
       },
     ],
   },

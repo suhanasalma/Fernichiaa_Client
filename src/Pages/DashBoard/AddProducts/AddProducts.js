@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { authContext } from "../../../Context/SharedContext";
 import { useForm } from "react-hook-form";
 import { useQuery } from "@tanstack/react-query";
+import Loading from "../../../Loading/Loading";
 
 const AddProducts = () => {
   const { user } = useContext(authContext);
@@ -21,13 +22,17 @@ const AddProducts = () => {
   // }, [user?.email]);
 
 
-    const { data: receneUser ='' } = useQuery({
+    const { data: receneUser ='',isLoading } = useQuery({
       queryKey: ["users", user?.email],
       queryFn: () =>
         fetch(`http://localhost:5000/users/${user?.email}`).then((res) =>
           res.json()
         ),
     });
+
+    if(isLoading){
+      return <Loading></Loading>
+    }
 
   console.log(receneUser);
 
@@ -58,6 +63,10 @@ const AddProducts = () => {
            sellerEmail: receneUser.email,
            sellerImg: receneUser.img,
            sellerPhone: receneUser.phone,
+           wishlist:false,
+           booked:false,
+           paid:false,
+           isVarified:receneUser.isVarified,
            postedTime: new Date().toISOString(),
          };
     fetch("http://localhost:5000/allProducts", {

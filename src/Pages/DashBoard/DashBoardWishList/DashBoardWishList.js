@@ -1,7 +1,24 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext, useEffect, useState } from 'react';
+import { json, Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { authContext } from '../../../Context/SharedContext';
 
-const DashBoardWishList = ({ wishlist }) => {
+const DashBoardWishList = ({ wishlist, refetch }) => {
+  const { user } = useContext(authContext);
+  const [receneUser, setReceneUser] = useState("");
+
+
+  
+  useEffect(() => {
+    fetch(`http://localhost:5000/users/${user?.email}`)
+      .then((res) => res.json())
+      .then((data) => {
+        setReceneUser(data);
+      });
+  }, [user?.email]);
+
+  console.log(receneUser)
+
   const {
     categoryName,
     title,
@@ -12,38 +29,61 @@ const DashBoardWishList = ({ wishlist }) => {
     location,
     img,
     sellerImg,
+    sellerEmail,
+    sellerPhone,
     details,
     _id,
     postedTime,
     productCode,
   } = wishlist;
 
-  const handleDeleteWishList = data =>{
+  const handleDeleteWishList = (data) => {
     console.log(data.productCode);
-     fetch(`http://localhost:5000/removeWishlist/${data.productCode}`, {
-       method: "put",
-     })
-       .then((res) => res.json())
-       .then((data) => {
-         console.log(data);
-        
-       });
+    fetch(`http://localhost:5000/removeWishlist/${data.productCode}`, {
+      method: "put",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        refetch();
+        toast("remove from wishlist");
+      });
+  };
 
-        fetch(`http://localhost:5000/wishlists/${data._id}`, {
-          method: "delete",
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            console.log(data);
-          });
+  const handleBookNow = (data) => {
+    const order = {
+      buyerName: receneUser?.name,
+      buyerEmail: receneUser?.email,
+      buyerAddress: receneUser?.address,
+      buyerImg: receneUser?.img,
+      productTitle: data?.title,
+      price: data?.newPrice,
+      Productimg: data?.img,
+      productCode: productCode,
+      sellerName: data?.sellerName,
+      sellerPhone: data?.sellerPhone,
+      sellerEmail: data?.sellerEmail,
+      sellerImg: data?.sellerImg,
+      Pickinglocation: data?.location,
+      wishingId: data._id,
+    };
 
+    console.log(order);
 
-    
-
-
-
-    
-  }
+      fetch("http://localhost:5000/transferOrder", {
+      method: "post",
+      headers: {
+     'content-type':'application/json'
+    },
+       body:JSON.stringify(order)
+      })
+      .then(res=>res.json())
+      .then(data=>{
+        console.log(data)
+        refetch()
+        toast('added to order')
+      })
+    }
 
 
   return (
@@ -65,7 +105,7 @@ const DashBoardWishList = ({ wishlist }) => {
           </div>
           <div>
             <div className="font-bold">{title}</div>
-            <div className="text-sm opacity-50">{oldPrice} $</div>
+            <div className="text-sm opacity-50">{newPrice} $</div>
           </div>
         </div>
       </td>
@@ -77,7 +117,9 @@ const DashBoardWishList = ({ wishlist }) => {
         </span>
       </td>
       <th>
-        <button className="btn btn-xs">Book Now</button>
+        <button onClick={() => handleBookNow(wishlist)} className="btn btn-xs">
+          Book Now
+        </button>
       </th>
       <th>
         <Link to={`/productDetails/${productCode}`}>
@@ -86,6 +128,6 @@ const DashBoardWishList = ({ wishlist }) => {
       </th>
     </tr>
   );
-};
+};;
 
 export default DashBoardWishList;

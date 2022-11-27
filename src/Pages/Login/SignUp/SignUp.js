@@ -15,8 +15,6 @@ const SignUp = () => {
    const [createdEmail,setCreatedEmail] = useState('')
 
    const [token] = useToken(createdEmail);
-   
-
 
    const { createUser, updateUser, createGoogleUser } = useContext(authContext);
    const imageHostKey = process.env.REACT_APP_imgbb_key;
@@ -49,6 +47,7 @@ const SignUp = () => {
         })
           .then((res) => res.json())
           .then((savedData) => {
+            // setCreatedEmail(user?.email);
             console.log(savedData);
           });
         // ...
@@ -65,15 +64,15 @@ const SignUp = () => {
       const img = data.photo[0]
       const formData = new FormData();
       formData.append('image',img)
-      const url = `https://api.imgbb.com/1/upload?&key=${imageHostKey}`;
-      fetch(url,{
-         method:"POST",
-         body:formData
-      })
-      .then(res=>res.json())
-      .then(result=>{
-         console.log(result)
-         if (result.success) {
+      // const url = `https://api.imgbb.com/1/upload?&key=${imageHostKey}`;
+      // fetch(url,{
+      //    method:"POST",
+      //    body:formData
+      // })
+      // .then(res=>res.json())
+      // .then(result=>{
+      //    console.log(result)
+        //  if (result.success) {
            const user = {
              name: data.name,
              age: data.age,
@@ -81,7 +80,7 @@ const SignUp = () => {
              address: data.address,
              email: data.email,
              role: data.role,
-             img: result.data.display_url,
+            //  img: result.data.display_url,
            };
           //  setUser(user)
            createUser(data.email, data.password)
@@ -91,7 +90,7 @@ const SignUp = () => {
                console.log(creatuser);
                const userInfo = {
                  displayName: data.name,
-                 photoURL: result.data.display_url,
+                //  photoURL: result.data.display_url,
                };
                updateUser(userInfo);
                console.log("updated");
@@ -117,8 +116,9 @@ const SignUp = () => {
                const errorMessage = error.message;
                // ..
              });
-         }
-      })
+        //  }
+    //  }
+    //  ) 
    }
 
   //  const getUserToken = email =>{

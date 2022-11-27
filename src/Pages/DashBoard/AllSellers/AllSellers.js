@@ -1,6 +1,8 @@
 import { useQuery } from '@tanstack/react-query';
 import React, {  useContext, useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 import { authContext } from '../../../Context/SharedContext';
+import Loading from '../../../Loading/Loading';
 import Seller from './Seller';
 
 const AllSellers = () => {
@@ -17,13 +19,21 @@ const AllSellers = () => {
 
   //  },[])
 
-    const { data: allSellers = [] } = useQuery({
-      queryKey: ["users"],
+    const {
+      data: allSellers = [],
+      isLoading,
+      refetch,
+    } = useQuery({
+      queryKey: ["allSellers"],
       queryFn: () =>
         fetch("http://localhost:5000/users?role=seller").then((res) =>
           res.json()
         ),
     });
+
+    if(isLoading){
+      return <Loading/>
+    }
 
     const handleDeleteUser = (user) => {
       console.log(user);
@@ -32,16 +42,9 @@ const AllSellers = () => {
       })
         .then((res) => res.json())
         .then((data) => {
+          refetch();
+          toast("seller deleted successfully");
           console.log("delete", data);
-          userDelete()
-            .then(() => {
-              // User deleted.
-              console.log("user deleted");
-            })
-            .catch((error) => {
-              // An error ocurred
-              // ...
-            });
         });
     };
 
@@ -55,7 +58,10 @@ const AllSellers = () => {
       method: "PUT",
     })
       .then((res) => res.json())
-      .then((data) => console.log(data));
+      .then((data) => {
+        refetch();
+        toast("seller verified successfully");
+        console.log(data)});
   }
 
 

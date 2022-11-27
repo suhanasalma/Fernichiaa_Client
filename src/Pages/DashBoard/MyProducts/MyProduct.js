@@ -6,6 +6,7 @@ const MyProduct = ({
   handleEditItem,
   handleAdvertise,
   setModalInfo,
+  refetch,
 }) => {
   const {
     advertised,

@@ -1,15 +1,17 @@
 import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import img from "../../../Assets/Logo/Sofa.svg";
 import { authContext } from "../../../Context/SharedContext";
 
 const Header = () => {
   const { user, logOut } = useContext(authContext);
+  const navigate = useNavigate()
 
   const signOut = () => {
     logOut()
       .then(() => {
         // Sign-out successful.
+        navigate('/')
       })
       .catch((error) => {
         // An error happened.
@@ -93,8 +95,9 @@ const Header = () => {
         <ul className="menu menu-horizontal p-0">{menus}</ul>
       </div>
       {user?.uid && (
-        <div className="navbar-end">
+        <div className="navbar-end gap-5">
           <Link to="/dashboard">Dashboard</Link>
+          <Link to="/dashboard">{user.displayName}</Link>
         </div>
       )}
       <label htmlFor="my-drawer-2" className=" lg:hidden">

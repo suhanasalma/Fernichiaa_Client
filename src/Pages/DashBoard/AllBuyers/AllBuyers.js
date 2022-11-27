@@ -1,11 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 import React, { useContext, useEffect, useState } from "react";
+import { toast } from "react-toastify";
 import { authContext } from "../../../Context/SharedContext";
+import Loading from "../../../Loading/Loading";
 import Buyer from "./Buyer";
 
 const AllBuyers = () => {
   // const [allbuyer, setAllBuyer] = useState([]);
-  const { userDelete } = useContext(authContext);
+  // const { userDelete } = useContext(authContext);
 
   // useEffect(() => {
   //   fetch("http://localhost:5000/users?role=user")
@@ -16,14 +18,18 @@ const AllBuyers = () => {
   //     });
   // }, []);
 
-  const { data: allbuyer = [],refetch,isLoading } = useQuery({
-    queryKey: ["users",],
+  const {
+    data: allbuyer = [],
+    refetch,
+    isLoading,
+  } = useQuery({
+    queryKey: ["allbuyer"],
     queryFn: () =>
       fetch("http://localhost:5000/users?role=user").then((res) => res.json()),
   });
 
   if(isLoading){
-    return <div>Loading</div>
+    return <Loading/>
   }
 
 
@@ -36,15 +42,19 @@ const AllBuyers = () => {
       .then((res) => res.json())
       .then((data) => {
         console.log("delete", data);
-        userDelete()
-          .then(() => {
-            // User deleted.
-            console.log("user deleted");
-          })
-          .catch((error) => {
-            // An error ocurred
-            // ...
-          });
+        toast('user deleted success')
+        refetch()
+        // userDelete()
+        //   .then(() => {
+        //     // User deleted.
+        //     console.log("user deleted");
+        //     // refetch()
+        //     toast('successfully user deleted')
+        //   })
+        //   .catch((error) => {
+        //     // An error ocurred
+        //     // ...
+        //   });
       });
   };
 

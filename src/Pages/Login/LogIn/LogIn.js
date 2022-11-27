@@ -20,7 +20,7 @@ const LogIn = () => {
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
-        setLoginEmail(data.email)
+        setLoginEmail(data.email);
         // ...
       }).catch((error) => {
         const errorCode = error.code;

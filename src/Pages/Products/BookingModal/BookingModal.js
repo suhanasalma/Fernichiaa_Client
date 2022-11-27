@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import React, { useContext, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { toast } from 'react-toastify';
 import { authContext } from '../../../Context/SharedContext';
 
 const BookingModal = ({ modalInfo }) => {
@@ -41,7 +42,37 @@ const BookingModal = ({ modalInfo }) => {
    } = modalInfo;
 
    const handleBooking = data =>{
-      console.log(data);
+      console.log(sellerEmail);
+      const order = {
+        buyerName: receneUser.name,
+        buyerEmail: receneUser?.email,
+        buyerAddress: receneUser?.address,
+        buyerImg: receneUser?.img,
+        productTitle: title,
+        price: newPrice,
+        Productimg: img,
+        productCode: _id,
+        sellerName: sellerName,
+        sellerPhone: sellerPhone,
+        sellerEmail:sellerEmail,
+        sellerImg:sellerImg,
+        Pickinglocation: location,
+
+      };
+
+      fetch("http://localhost:5000/orders",{
+        method:'post',
+        headers:{
+          'content-type':'application/json'
+        },
+        body:JSON.stringify(order)
+      })
+      .then(res=>res.json())
+      .then(data=>{
+        toast('order complete')
+        console.log(data)
+      })
+      console.log(order)
    }
 
   return (
@@ -174,7 +205,7 @@ const BookingModal = ({ modalInfo }) => {
               />
             </div>
 
-            <div className="mb-5">
+            <div className="mb-10">
               <label
                 className="text-gray-700 dark:text-gray-200"
                 for="passwordConfirmation"
@@ -190,7 +221,10 @@ const BookingModal = ({ modalInfo }) => {
                 className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
               />
             </div>
-            <h1>Seller Information</h1>
+            <div className='text-center my-5 text-secondary'>
+              <h1>Seller Information</h1>
+              <p> Please Contact here to pick your products</p>
+            </div>
             <div className="mb-5">
               <label
                 className="text-gray-700 dark:text-gray-200"

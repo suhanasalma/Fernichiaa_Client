@@ -1,33 +1,41 @@
 import { useQuery } from '@tanstack/react-query';
 import React, { useContext, useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 import { authContext } from '../../../Context/SharedContext';
+import Loading from '../../../Loading/Loading';
 import EditModal from './EditModal';
 import MyProduct from './MyProduct';
 
 const MyProducts = () => {
-  const [myProducts, setMyProducts] = useState([]);
+  // const [myProducts, setMyProducts] = useState([]);
   const { user } = useContext(authContext);
   const [modalInfo, setModalInfo] = useState(null);
 
-  useEffect(() => {
-    fetch(`http://localhost:5000/sellProducts/${user?.email}`)
-      .then((res) => res.json())
-      .then(
-        (data) => {
-          // console.log(data);
-          setMyProducts(data);
-        },
+  // useEffect(() => {
+  //   fetch(`http://localhost:5000/sellProducts/${user?.email}`)
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       // console.log(data);
+  //       setMyProducts(data);
+  //     });
+  // }, [user?.email]);
+  // console.log(user?.email);
 
-      );
-  }, [user?.email]);
-console.log(user?.email)
-  // const { data: myProducts = [] } = useQuery({
-  //   queryKey: ["users", user?.email],
-  //   queryFn: () =>
-  //     fetch(`http://localhost:5000/sellProducts/${user?.email}`).then((res) =>
-  //       res.json()
-  //     ),
-  // });
+  const {
+    data: myProducts = [],
+    isLoading,
+    refetch,
+  } = useQuery({
+    queryKey: ["myProducts", user?.email],
+    queryFn: () =>
+      fetch(`http://localhost:5000/sellProducts/${user?.email}`).then((res) =>
+        res.json()
+      ),
+  });
+
+  if(isLoading){
+    return <Loading/>
+  }
 
   const handleDeleteProduct = (deleteItem) => {
     console.log(deleteItem);
@@ -36,8 +44,10 @@ console.log(user?.email)
     })
       .then((res) => res.json())
       .then((data) => {
-        alert("Successfully Deleted");
-        console.log(data)});
+         toast("successfully deleted");
+         refetch();
+        console.log(data);
+      });
   };
 
   const handleAdvertise = (adData) => {
@@ -47,8 +57,11 @@ console.log(user?.email)
     })
       .then((res) => res.json())
       .then((data) => {
-        alert('added for advertise')
-        console.log(data)});
+        // alert("added for advertise");
+        toast('added for advertise')
+        refetch()
+        console.log(data);
+      });
   };
 
   return (
@@ -76,6 +89,7 @@ console.log(user?.email)
           <tbody>
             {myProducts?.map((item) => (
               <MyProduct
+                refetch={refetch}
                 key={item._id}
                 handleAdvertise={handleAdvertise}
                 handleDeleteProduct={handleDeleteProduct}

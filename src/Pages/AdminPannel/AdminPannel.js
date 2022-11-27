@@ -6,7 +6,7 @@ const AdminPannel = () => {
   const [adminPannels, setadminPannels] = useState("");
 
   // const { data: adminPannels='',isLoading } = useQuery({
-  //   queryKey: ["users"],
+  //   queryKey: ["adminPannels"],
   //   queryFn: () =>
   //     fetch("http://localhost:5000/users/suhanasalma@gmail.com").then((res) =>
   //       res.json()
@@ -17,14 +17,13 @@ const AdminPannel = () => {
   //    return <div>Loading</div>;
   //  }
 
-
   useEffect(() => {
     fetch("http://localhost:5000/users/suhanasalma@gmail.com")
       .then((res) => res.json())
       .then((data) => setadminPannels(data));
   }, []);
 
-  console.log(adminPannels)
+  // console.log(adminPannels);
   // const adminPannels = [
   //   {
   //     id:1,
@@ -40,7 +39,6 @@ const AdminPannel = () => {
   // ];
   return (
     <div>
-
       <section class="bg-white dark:bg-gray-900">
         <div class="container px-6 py-10 mx-auto">
           <div class="xl:flex xl:items-center xL:-mx-4">
