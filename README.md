@@ -6,6 +6,52 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 In the project directory, you can run:
 
+### `This is a resaling furniture sale based product`
+
+**you can boost your product for more sale
+**as a admin you have controll over seller and buyer
+** as a seller you can edit ,delete,boost your product
+** as a buyer you can add ,buy your desire product
+
+### Used Functionality
+** react-router
+** tailwind,daisy ui,merakiui
+** Firebase
+** Tan Query
+**React hook form 
+** React stripe payment methode
+
+## for backend
+** Node
+** Mongodb
+** Express
+
+
+### Client Side Code
+
+: [https://github.com/programming-hero-web-course-4/b612-used-products-resale-clients-side-suhanasalma]
+
+
+
+### Server Side Code
+
+: [https://github.com/programming-hero-web-course-4/b612-used-products-resale-server-side-suhanasalma]
+
+
+### Live Site
+
+: [https://furniture-shop-ff82d.web.app/]
+
+adminEmail: suhanasalma@gmail.com
+
+adminPassword: 123456
+
+as your are going to test my site that why didint added any password authentication
+
+
+
+
+
 ### `npm start`
 
 Runs the app in the development mode.\
