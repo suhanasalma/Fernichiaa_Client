@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useLoaderData } from "react-router-dom";
+import useTitle from "../../../Hooks/useTitle";
 import BookingModal from "../BookingModal/BookingModal";
 import Product from "../Product/Product";
 
@@ -7,14 +8,16 @@ import Product from "../Product/Product";
 
 const Products = () => {
   const products = useLoaderData();
-    const [modalInfo, setModalInfo] = useState("");
+    // const [modalInfo, setModalInfo] = useState("");
+    const [modalInfo, setModalInfo] = useState(null);
+    useTitle('Products')
 
 
 
   return (
     <div>
-      <section class="bg-white dark:bg-gray-900">
-        <div class="container px-6 py-10 mx-auto">
+      <section class="bg-white ">
+        <div class="lg:container px-6 py-10 mx-auto">
           <div class="flex items-center justify-between">
             <h1 class="text-3xl font-semibold text-gray-800 capitalize lg:text-4xl dark:text-white">
               Sale Post
@@ -32,7 +35,9 @@ const Products = () => {
           </div>
         </div>
       </section>
-      <BookingModal modalInfo={modalInfo} />
+      {modalInfo && (
+        <BookingModal setModalInfo={setModalInfo} modalInfo={modalInfo} />
+      )}
     </div>
   );
 };

@@ -1,40 +1,40 @@
 import React from 'react';
+import { toast } from 'react-toastify';
 
-const EditModal = ({ modalInfo }) => {
-   const { title, newPrice, details, _id } = modalInfo;
-   console.log(modalInfo)
+const EditModal = ({ modalInfo, refetch, setModalInfo }) => {
+  const { title, newPrice, details, _id } = modalInfo;
+  console.log(modalInfo);
 
-   const handleEdit = (e) =>{
-      e.preventDefault()
-      console.log('clicked')
-      const form = e.target;
-      const title = form.title.value;
-      const newPrice = form.newPrice.value;
-      const details = form.details.value;
+  const handleEdit = (e) => {
+    e.preventDefault();
+    console.log("clicked");
+    const form = e.target;
+    const title = form.title.value;
+    const newPrice = form.newPrice.value;
+    const details = form.details.value;
 
-      const updateInfo = {
-        title,
-        newPrice,
-        details,
-      };
-      console.log(updateInfo);
-        fetch(`http://localhost:5000/products/edit/${_id}`, {
-          method: "post",
-          headers:{
-            'content-type':'application/json'
-
-          },
-          body:JSON.stringify(updateInfo)
-        })
-        .then(res=>res.json())
-        .then(data=>{
-          
-         console.log(data)
-              //  alert("successfully updated");
-
-        })
-
-   }
+    const updateInfo = {
+      title,
+      newPrice,
+      details,
+    };
+    console.log(updateInfo);
+    fetch(`http://localhost:5000/products/edit/${_id}`, {
+      method: "post",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(updateInfo),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        toast("edited");
+        refetch();
+        setModalInfo(null)
+        //  alert("successfully updated");
+      });
+  };
 
   return (
     <div>
@@ -68,7 +68,7 @@ const EditModal = ({ modalInfo }) => {
                 name="newPrice"
                 className="w-full border p-2"
                 type="text"
-                defaultValue={`${newPrice} $`}
+                defaultValue={`${newPrice}$`}
               />
             </div>
             <div>

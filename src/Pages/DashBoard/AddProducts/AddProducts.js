@@ -8,6 +8,7 @@ const AddProducts = () => {
   const { user } = useContext(authContext);
   // const [receneUser, setRecentUser] = useState("");
   const { register, handleSubmit } = useForm();
+  // const [isLoading,setIsLoading] = useState(true)
     const imageHostKey = process.env.REACT_APP_imgbb_key;
 
   //   console.log(user)
@@ -18,6 +19,7 @@ const AddProducts = () => {
   //     .then((data) => {
   //       // console.log(data)
   //       setRecentUser(data);
+  //       setIsLoading(false)
   //     });
   // }, [user?.email]);
 
@@ -29,6 +31,8 @@ const AddProducts = () => {
           res.json()
         ),
     });
+
+    console.log(receneUser)
 
     if(isLoading){
       return <Loading></Loading>
@@ -66,6 +70,7 @@ const AddProducts = () => {
            wishlist:false,
            booked:false,
            paid:false,
+           advertised:false,
            isVarified:receneUser.isVarified,
            postedTime: new Date().toISOString(),
          };

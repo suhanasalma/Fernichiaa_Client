@@ -1,21 +1,9 @@
-import { useQuery } from "@tanstack/react-query";
-import React, { useEffect, useState } from "react";
-import AdminCard from "./AdminCard";
 
-const AdminPannel = () => {
+import React, { useEffect, useState } from "react";
+
+const AdminCard = () => {
   const [adminPannels, setadminPannels] = useState("");
 
-  // const { data: adminPannels='',isLoading } = useQuery({
-  //   queryKey: ["adminPannels"],
-  //   queryFn: () =>
-  //     fetch("http://localhost:5000/users/suhanasalma@gmail.com").then((res) =>
-  //       res.json()
-  //     ),
-  // });
-
-  //  if (isLoading) {
-  //    return <div>Loading</div>;
-  //  }
 
   useEffect(() => {
     fetch("http://localhost:5000/users/suhanasalma@gmail.com")
@@ -23,20 +11,6 @@ const AdminPannel = () => {
       .then((data) => setadminPannels(data));
   }, []);
 
-  // console.log(adminPannels);
-  // const adminPannels = [
-  //   {
-  //     id:1,
-  //     name: "suhana",
-  //     img: "",
-  //   },
-  //   {
-  //     id:2,
-  //     name: "salma",
-  //     img: "",
-  //   },
-
-  // ];
   return (
     <div>
       <section class="bg-white dark:bg-gray-900">
@@ -71,6 +45,9 @@ const AdminPannel = () => {
                 <p class="mt-2 text-gray-500 capitalize dark:text-gray-300">
                   {adminPannels?.role}
                 </p>
+                <p class="mt-2 text-gray-500 capitalize dark:text-gray-300">
+                  {adminPannels?.email}
+                </p>
               </div>
             </div>
           </div>
@@ -80,4 +57,4 @@ const AdminPannel = () => {
   );
 };
 
-export default AdminPannel;
+export default AdminCard;

@@ -9,20 +9,26 @@ module.exports = {
           secondary: "#FF7004", //orange
           accent: "#212121", //black
           neutral: "#000000", //text-black
-          info:"#E7E7E7",//light gray
+          info: "#E7E7E7", //light gray
           "base-100": "#ffffff", // white
         },
       },
-      {
-        dark: {
-          "base-100": "#1F2937", //bg-black
-          neutral: "#ffffff", //text-white
-          accent: "#1F2937", // white
-        },
-      },
+      // {
+      //   dark: {
+      //     "base-100": "#1F2937", //bg-black
+      //     neutral: "#ffffff", //text-white
+      //     accent: "#1F2937", // white
+      //   },
+      // },
     ],
   },
   theme: {
+    screens: {
+      sm: "400px",
+      md: "768px",
+      lg: "976px",
+      xl: "1440px",
+    },
     extend: {},
   },
   plugins: [require("daisyui")],

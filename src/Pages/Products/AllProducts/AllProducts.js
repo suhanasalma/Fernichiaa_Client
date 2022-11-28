@@ -1,5 +1,8 @@
+import { useQuery } from "@tanstack/react-query";
+import { data } from "autoprefixer";
 import React, { useEffect, useState } from "react";
 import { useLoaderData } from "react-router-dom";
+import useTitle from "../../../Hooks/useTitle";
 import BookingModal from "../BookingModal/BookingModal";
 import Product from "../Product/Product";
 
@@ -10,6 +13,7 @@ const AllProducts = () => {
   const [page, setPage] = useState(0);
   const limit = 6;
   const [modalInfo,setModalInfo] = useState('')
+  useTitle('ALl Products')
   // const page =count/limit
 
   useEffect(() => {
@@ -21,11 +25,14 @@ const AllProducts = () => {
       });
   }, [page, limit]);
 
+
+  console.log(allProducts);
+
   const pages = Math.ceil(count / limit);
 
   return (
     <>
-      <div className="bg-info h-40 flex justify-center items-center text-3xl">
+      <div className="bg-info h-40 flex justify-center items-center text-3xl mx-10">
         <div className="text-center">
           <h1>All Products</h1>
           <p>choose your desire products</p>
@@ -54,7 +61,9 @@ const AllProducts = () => {
           </button>
         ))}
       </div>
-      <BookingModal modalInfo={modalInfo} />
+      {modalInfo && (
+        <BookingModal setModalInfo={setModalInfo} modalInfo={modalInfo} />
+      )}
     </>
   );
 };

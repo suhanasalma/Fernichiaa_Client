@@ -2,31 +2,39 @@ import { useQuery } from "@tanstack/react-query";
 import React, { useContext, useEffect, useState } from "react";
 import { Link, Outlet } from "react-router-dom";
 import { authContext } from "../../Context/SharedContext";
+import useAdmin from "../../Hooks/useAdmin";
+import useTitle from "../../Hooks/useTitle";
 import Loading from "../../Loading/Loading";
 import Header from "../../Pages/SharedPages/Header/Header";
 
 const DashboardLayer = () => {
   const { user } = useContext(authContext);
-  // const [currentUser,serCurrentUser] = useState([])
-  // const [isLoading,setLoading] = useState(true)
+  const [currentUser,serCurrentUser] = useState('')
+  const [isLoading,setLoading] = useState(true)
+  const [isAdmin] = useAdmin(user?.email);
+  useTitle('Dashboard')
+
+  console.log(user)
  
 
-  //   useEffect(() => {
-  //     fetch(`http://localhost:5000/users/${user?.email}`)
-  //       .then((res) => res.json())
-  //       .then((data) => {
-  //         serCurrentUser(data);
-  //         setLoading(false)
-  //       });
-  //   }, [user?.email]);
+    useEffect(() => {
+      fetch(`http://localhost:5000/users/${user?.email}`)
+        .then((res) => res.json())
+        .then((data) => {
+          serCurrentUser(data);
+          setLoading(false)
+        });
+    }, [user?.email]);
 
-    const { data: currentUser = [], isLoading } = useQuery({
-      queryKey: ["currentUser", user?.email],
-      queryFn: () =>
-        fetch(`http://localhost:5000/users/${user?.email}`).then((res) =>
-          res.json()
-        ),
-    });
+    // const { data: currentUser = [], isLoading } = useQuery({
+    //   queryKey: ["currentUser", user?.email],
+    //   queryFn: () =>
+    //     fetch(`http://localhost:5000/users/${user?.email}`).then((res) =>
+    //       res.json()
+    //     ),
+    // });
+
+    console.log(currentUser)
 
     if(isLoading){
       return <Loading></Loading>
@@ -40,15 +48,15 @@ const DashboardLayer = () => {
     <div>
       <Header></Header>
 
-      <div className="drawer drawer-mobile">
+      <div className="drawer drawer-mobile border ">
         <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
-        <div className="drawer-content ">
+        <div className="drawer-content mx-10 ">
           {/* <!-- Page content here --> */}
           <Outlet />
         </div>
-        <div className="drawer-side">
-          <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
-          <div className="flex flex-col w-64 h-screen py-8 border-r ">
+        <div className="drawer-side mx-10 ">
+          <label htmlFor="my-drawer-2 " className="drawer-overlay "></label>
+          <div className="flex flex-col w-64 h-screen py-8 border-r bg-white ">
             <h2 className="text-3xl font-semibold uppercase text-center text-gray-800 ">
               {currentUser?.role}
             </h2>
@@ -77,7 +85,8 @@ const DashboardLayer = () => {
 
             <div className="flex flex-col justify-between flex-1 mt-6">
               <nav>
-                {currentUser?.role === "admin" && (
+                {isAdmin && (
+                  // currentUser?.role !== "seller" &&
                   <>
                     <Link
                       to="/dashboard/allbuyers"
@@ -139,53 +148,57 @@ const DashboardLayer = () => {
                     </Link>
                   </>
                 )}
-                <Link
-                  to="/dashboard/wishlist"
-                  className="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform hover:bg-gray-200  hover:text-gray-700"
-                  href="#"
-                >
-                  <svg
-                    className="w-5 h-5"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M15 5V7M15 11V13M15 17V19M5 5C3.89543 5 3 5.89543 3 7V10C4.10457 10 5 10.8954 5 12C5 13.1046 4.10457 14 3 14V17C3 18.1046 3.89543 19 5 19H19C20.1046 19 21 18.1046 21 17V14C19.8954 14 19 13.1046 19 12C19 10.8954 19.8954 10 21 10V7C21 5.89543 20.1046 5 19 5H5Z"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    />
-                  </svg>
-
-                  <span className="mx-4 font-medium">WishList</span>
-                </Link>
-                <Link
-                  to="/dashboard/myorders"
-                  className="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform hover:bg-gray-200  hover:text-gray-700"
-                  href="#"
-                >
-                  <svg
-                    className="w-5 h-5"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M15 5V7M15 11V13M15 17V19M5 5C3.89543 5 3 5.89543 3 7V10C4.10457 10 5 10.8954 5 12C5 13.1046 4.10457 14 3 14V17C3 18.1046 3.89543 19 5 19H19C20.1046 19 21 18.1046 21 17V14C19.8954 14 19 13.1046 19 12C19 10.8954 19.8954 10 21 10V7C21 5.89543 20.1046 5 19 5H5Z"
-                      stroke="currentColor"
-                      stroke-width="2"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                    />
-                  </svg>
-
-                  <span className="mx-4 font-medium">My Orders</span>
-                </Link>
-                {/* {currentUser?.role === "seller" && ( */}
+                {currentUser?.role === "user" && (
                   <>
                     <Link
+                      to="/dashboard/wishlist"
+                      className="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform hover:bg-gray-200  hover:text-gray-700"
+                      href="#"
+                    >
+                      <svg
+                        className="w-5 h-5"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M15 5V7M15 11V13M15 17V19M5 5C3.89543 5 3 5.89543 3 7V10C4.10457 10 5 10.8954 5 12C5 13.1046 4.10457 14 3 14V17C3 18.1046 3.89543 19 5 19H19C20.1046 19 21 18.1046 21 17V14C19.8954 14 19 13.1046 19 12C19 10.8954 19.8954 10 21 10V7C21 5.89543 20.1046 5 19 5H5Z"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                      </svg>
+
+                      <span className="mx-4 font-medium">WishList</span>
+                    </Link>
+                    <Link
+                      to="/dashboard/myorders"
+                      className="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform hover:bg-gray-200  hover:text-gray-700"
+                      href="#"
+                    >
+                      <svg
+                        className="w-5 h-5"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M15 5V7M15 11V13M15 17V19M5 5C3.89543 5 3 5.89543 3 7V10C4.10457 10 5 10.8954 5 12C5 13.1046 4.10457 14 3 14V17C3 18.1046 3.89543 19 5 19H19C20.1046 19 21 18.1046 21 17V14C19.8954 14 19 13.1046 19 12C19 10.8954 19.8954 10 21 10V7C21 5.89543 20.1046 5 19 5H5Z"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                        />
+                      </svg>
+
+                      <span className="mx-4 font-medium">My Orders</span>
+                    </Link>
+                  </>
+                )}
+                {currentUser?.role === "seller" && (
+                  <>
+                    {/* <Link
                       to="/dashboard/mybuyers"
                       className="flex items-center px-4 py-2 mt-5 text-gray-600 transition-colors duration-300 transform  hover:bg-gray-200   hover:text-gray-700"
                     >
@@ -212,7 +225,7 @@ const DashboardLayer = () => {
                       </svg>
 
                       <span className="mx-4 font-medium">My Buyers</span>
-                    </Link>
+                    </Link> */}
 
                     <Link
                       to="/dashboard/myproducts"
@@ -266,7 +279,7 @@ const DashboardLayer = () => {
                       <span className="mx-4 font-medium">Add a Products</span>
                     </Link>
                   </>
-                {/* )} */}
+                )}
               </nav>
             </div>
           </div>

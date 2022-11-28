@@ -29,7 +29,7 @@ const Product = ({ product, setModalInfo }) => {
   const {
     categoryName,
     title,
-    //   boughtYear,
+    boughtYear,
     newPrice,
     oldPrice,
     sellerName,
@@ -44,6 +44,7 @@ const Product = ({ product, setModalInfo }) => {
     sellerEmail,
     sellerPhone
   } = product;
+
 
   const handleWishList = () => {
     const wishlist = {
@@ -92,14 +93,21 @@ const Product = ({ product, setModalInfo }) => {
 
       <div className="mt-8">
         <div className="flex justify-between">
-          <button
-            disabled={product?.wishlist || product?.booked}
-            onClick={handleWishList}
-            className="btn text-secondary uppercase"
-          >
-            WishList
-          </button>
-          <div className="">
+          {user?.uid ? (
+            <button
+              disabled={product?.paid}
+              onClick={handleWishList}
+              className="btn text-secondary uppercase"
+            >
+              WishList
+            </button>
+          ) : (
+            <Link to="/login" className="btn text-secondary uppercase">
+              WishList
+            </Link>
+          )}
+          <p> Bought in {boughtYear}</p>
+          <div className="flex sm:flex-col items-center justify-center lg:flex-row">
             <span className="text-secondary text-xl">{newPrice}$</span>
             <span className="text-secondary text-xl line-through decoration-2 ml-2">
               {oldPrice}$
@@ -115,7 +123,7 @@ const Product = ({ product, setModalInfo }) => {
           {details?.slice(0, 100)}...
         </p>
 
-        <div className="flex items-center justify-between mt-4">
+        <div className="flex lg:flex-row sm:flex-col gap-10 sm:mt-10 items-center justify-between mt-4">
           <div className="flex items-center gap-5">
             {isVarified ? (
               <div className="avatar online">
@@ -144,14 +152,20 @@ const Product = ({ product, setModalInfo }) => {
               </p>
             </div>
           </div>
-          <label
-            disabled={product?.booked}
-            onClick={() => setModalInfo(product)}
-            htmlFor="my-modal-4"
-            className="btn text-secondary uppercase"
-          >
-            Book Now
-          </label>
+          {user?.uid ? (
+            <label
+              disabled={product?.paid}
+              onClick={() => setModalInfo(product)}
+              htmlFor="my-modal-4"
+              className="btn text-secondary uppercase"
+            >
+              Book Now
+            </label>
+          ) : (
+            <Link to="/login" className="btn text-secondary uppercase">
+              Book Now
+            </Link>
+          )}
           <Link
             to={`/productDetails/${_id}`}
             className="inline-block text-secondary underline hover:text-blue-400"

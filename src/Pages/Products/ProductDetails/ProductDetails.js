@@ -165,7 +165,7 @@ const ProductDetails = () => {
         </div>
       </div>
 
-      <div>
+      <div className="flex justify-center">
         <div className="space-y-6 py-10">
           <h1 className="text-5xl">Seller Information</h1>
           <div>

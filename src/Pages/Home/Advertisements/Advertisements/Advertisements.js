@@ -1,10 +1,15 @@
 import { useQuery } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import useTitle from "../../../../Hooks/useTitle";
+import BookingModal from "../../../Products/BookingModal/BookingModal";
 import Product from "../../../Products/Product/Product";
 
 const Advertisements = () => {
   const [adervertises, setAdvertised] = useState([]);
+     const [modalInfo, setModalInfo] = useState(null);
+       useTitle("Advertisement");
+
 
   useEffect(() => {
     fetch("http://localhost:5000/allProducts/advertise")
@@ -15,16 +20,8 @@ const Advertisements = () => {
       });
   }, []);
 
-  // const { data: adervertises = [] } = useQuery({
-  //   queryKey: ["users"],
-  //   queryFn: () =>
-  //     fetch("http://localhost:5000/allProducts/advertise").then((res) =>
-  //       res.json()
-  //     ),
-  // });
-
   return (
-    <div className="">
+    <div className=" mx-10">
       {adervertises?.length ? (
         <div className=" my-40">
           <div className="w-1/2 mx-auto mb-20 text-center">
@@ -39,7 +36,11 @@ const Advertisements = () => {
           </div>
           <div className="grid grid-cols-1 gap-8 md:grid-cols-2 xl:grid-cols-3">
             {adervertises?.slice(0, 3).map((product) => (
-              <Product product={product}></Product>
+              <Product
+                setModalInfo={setModalInfo}
+                key={product._id}
+                product={product}
+              ></Product>
             ))}
           </div>
           {adervertises?.length > 3 ? (
@@ -55,7 +56,13 @@ const Advertisements = () => {
           )}
         </div>
       ) : (
-        <div></div>
+        <div className="uppercase text-4xl flex justify-center items-center text-secondary" >
+          <h1>Right now nothing is available </h1>
+        </div>
+      )}
+
+      {modalInfo && (
+        <BookingModal setModalInfo={setModalInfo} modalInfo={modalInfo} />
       )}
     </div>
   );

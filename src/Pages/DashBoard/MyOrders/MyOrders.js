@@ -1,5 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
 import React, { useContext } from 'react';
+import { Link } from 'react-router-dom';
 import { authContext } from "../../../Context/SharedContext";
 import Loading from '../../../Loading/Loading';
 import MyOrder from './MyOrder';
@@ -16,7 +17,8 @@ const MyOrders = () => {
         ),
     });
 
-    console.log(myorders)
+  
+  
 
     if(isLoading){
       return <Loading/>
@@ -39,11 +41,12 @@ const MyOrders = () => {
                <th>Product</th>
                <th>Seller</th>
                <th>PickUp Location</th>
-               <th></th>
+               <th>Action</th>
+               <th>Pay Now</th>
              </tr>
            </thead>
            <tbody>
-             {myorders.map((order) => (
+             {myorders?.map((order) => (
                <MyOrder
                  key={order._id}
                  refetch={refetch}
@@ -53,11 +56,13 @@ const MyOrders = () => {
            </tbody>
          </table>
        </div>
-       <div className="text-right my-10">
-         <button className="btn lg:w-96 text-white text-xl border-0 bg-secondary">
-           Pay
-         </button>
-       </div>
+       {/* <div className="text-right my-10">
+         <Link total={total} myorders={myorders} to="/dashboard/confirmpayment">
+           <button className="btn lg:w-96 text-white text-xl border-0 bg-secondary">
+             Pay
+           </button>
+         </Link>
+       </div> */}
      </div>
    );
 };

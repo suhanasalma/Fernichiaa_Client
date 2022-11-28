@@ -7,7 +7,7 @@ import Information from './Information';
 const Informations = () => {
    const informations = [
       {
-         title:"Free Shipping No Return",
+         title:"You can decide how you can pick order",
          desc:'Think before you order',
          icon:img1
       },

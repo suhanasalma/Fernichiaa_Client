@@ -8,11 +8,16 @@ import DashBoard from "../../Pages/DashBoard/DashBoard";
 import DashboardLayer from "../../Layer/DashboardLayer/DashboardLayer";
 import AllSellers from "../../Pages/DashBoard/AllSellers/AllSellers";
 import AllBuyers from "../../Pages/DashBoard/AllBuyers/AllBuyers";
-import MyBuyers from "../../Pages/DashBoard/MyBuyers/MyBuyers";
+// import MyBuyers from "../../Pages/DashBoard/MyBuyers/MyBuyers";
 import MyOrders from "../../Pages/DashBoard/MyOrders/MyOrders";
 import AddProducts from "../../Pages/DashBoard/AddProducts/AddProducts";
 import MyProducts from "../../Pages/DashBoard/MyProducts/MyProducts";
 import DashBoardWishlists from "../../Pages/DashBoard/DashBoardWishList/DashBoardWishlists";
+import PrivateRoute from "../PrivateRoute/PrivateRoute";
+import AdminRoute from "../PrivateRoute/AdminRoute";
+import ConfirmPayment from "../../Pages/DashBoard/ConfirmPayment/ConfirmPayment";
+import Blog from "../../Pages/Blogs/Blog";
+import ErrorPage from "../../Pages/ErrorPage/ErrorPage";
 const { createBrowserRouter } = require("react-router-dom");
 const { default: Main } = require("../../Layer/Main/Main");
 const { default: Home } = require("../../Pages/Home/Home");
@@ -30,7 +35,11 @@ export const router = createBrowserRouter([
         path: "/categories/:id",
         loader: ({ params }) =>
           fetch(`http://localhost:5000/categories/products/${params.id}`),
-        element: <Products />,
+        element: (
+          <PrivateRoute>
+            <Products />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/productDetails/:id",
@@ -41,7 +50,11 @@ export const router = createBrowserRouter([
       {
         path: "/allproducts",
         // loader: () => fetch(`http://localhost:5000/allProducts`),
-        element: <AllProducts />,
+        element: (
+          <PrivateRoute>
+            <AllProducts />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/allProducts/advertise",
@@ -59,11 +72,19 @@ export const router = createBrowserRouter([
         path: "/signup",
         element: <SignUp />,
       },
+      {
+        path: "/blogs",
+        element: <Blog />,
+      },
     ],
   },
   {
     path: "/dashboard",
-    element: <DashboardLayer />,
+    element: (
+      <PrivateRoute>
+        <DashboardLayer />
+      </PrivateRoute>
+    ),
     children: [
       {
         path: "/dashboard",
@@ -71,16 +92,24 @@ export const router = createBrowserRouter([
       },
       {
         path: "/dashboard/allsellers",
-        element: <AllSellers />,
+        element: (
+          <AdminRoute>
+            <AllSellers />
+          </AdminRoute>
+        ),
       },
       {
         path: "/dashboard/allbuyers",
-        element: <AllBuyers />,
+        element: (
+          <AdminRoute>
+            <AllBuyers />
+          </AdminRoute>
+        ),
       },
-      {
-        path: "/dashboard/mybuyers",
-        element: <MyBuyers />,
-      },
+      // {
+      //   path: "/dashboard/mybuyers",
+      //   element: <MyBuyers />,
+      // },
       {
         path: "/dashboard/myorders",
         element: <MyOrders />,
@@ -97,6 +126,20 @@ export const router = createBrowserRouter([
         path: "/dashboard/wishlist",
         element: <DashBoardWishlists></DashBoardWishlists>,
       },
+      {
+        path: "/dashboard/confirmpayment/:id",
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/orders/${params.id}`),
+        element: (
+          <PrivateRoute>
+            <ConfirmPayment />
+          </PrivateRoute>
+        ),
+      },
     ],
+  },
+  {
+    path: "*",
+    element: <ErrorPage />,
   },
 ]);

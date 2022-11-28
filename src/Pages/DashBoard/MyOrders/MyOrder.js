@@ -1,8 +1,10 @@
-import React from 'react';
+import { useQuery } from '@tanstack/react-query';
+import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 const MyOrder = ({ order, refetch }) => {
-  console.log(order);
+  // console.log(order);
   const {
     Pickinglocation,
     Productimg,
@@ -14,6 +16,16 @@ const MyOrder = ({ order, refetch }) => {
     sellerPhone,
     _id
   } = order;
+
+  console.log(order)
+
+  // const { data: products } = useQuery({
+  //   queryKey: ["products"],
+  //   queryFn: () => fetch("http://localhost:5000/products")
+  //   .then(res=>res.json)
+  // });
+
+  // console.log(products)
  
 
   const handleOrderDelete = (data) => {
@@ -34,7 +46,7 @@ const MyOrder = ({ order, refetch }) => {
   return (
     <tr>
       <th>
-        <label>{order?.booked ? "Paid" : "Non Paid"}</label>
+        <label>{order?.paid ? "Paid" : "Non Paid"}</label>
       </th>
       <td>
         <div className="flex items-center space-x-3">
@@ -56,16 +68,20 @@ const MyOrder = ({ order, refetch }) => {
       </td>
       <td>{Pickinglocation}</td>
       <th>
-        {order?.booked ? (
-          <button className="btn btn-xs">Details</button>
-        ) : (
-          <button
-            onClick={() => handleOrderDelete(order)}
-            className="btn btn-xs"
-          >
-            X
-          </button>
-        )}
+        <button
+          disabled={order?.paid}
+          onClick={() => handleOrderDelete(order)}
+          className="btn btn-xs"
+        >
+          X
+        </button>
+      </th>
+      <th>
+          <Link to={`/dashboard/confirmpayment/${_id}`}>
+            <button disabled={order?.paid } className="btn btn-xs">
+              Pay
+            </button>
+          </Link>
       </th>
     </tr>
   );

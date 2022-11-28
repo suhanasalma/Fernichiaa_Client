@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react';
 import img from '../../../Assets/logUp/1.jpg'
 import { useForm } from "react-hook-form";
 import { authContext } from '../../../Context/SharedContext';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import useToken from '../../../Hooks/useToken';
 
 const SignUp = () => {
@@ -13,16 +13,24 @@ const SignUp = () => {
    } = useForm();
 
    const [createdEmail,setCreatedEmail] = useState('')
+   const navigate = useNavigate()
 
    const [token] = useToken(createdEmail);
 
    const { createUser, updateUser, createGoogleUser } = useContext(authContext);
    const imageHostKey = process.env.REACT_APP_imgbb_key;
    const [role,setRole] = useState('user')
+    const location = useLocation();
+
   //  const [user,setUser] = useState('')
    // console.log(imageHostKey);
 
    // const [data,setData] = useState('')
+   let from = location.state?.from?.pathname || "/";
+
+   if(token){
+      navigate(from, { replace: true });
+   }
 
    const handleGoolgleUser = () =>{
     console.log("clicked")
@@ -82,12 +90,15 @@ const SignUp = () => {
              role: data.role,
             //  img: result.data.display_url,
            };
+           console.log(user)
           //  setUser(user)
+
            createUser(data.email, data.password)
              .then((userCredential) => {
                // Signed in
                const creatuser = userCredential.user;
                console.log(creatuser);
+               console.log(data.email)
                const userInfo = {
                  displayName: data.name,
                 //  photoURL: result.data.display_url,

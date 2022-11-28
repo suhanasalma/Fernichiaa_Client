@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { authContext } from "../../../Context/SharedContext";
 import useToken from "../../../Hooks/useToken";
@@ -13,14 +13,24 @@ const LogIn = () => {
    const { signInUser, } = useContext(authContext);
    const [loginEmail,setLoginEmail] = useState('')
    const [token] = useToken(loginEmail)
+   const location = useLocation()
+   const navigate = useNavigate()
+
+      let from = location.state?.from?.pathname || "/";
+
+      if (token) {
+        navigate('/');
+      }
+
 
    const handleInfo = (data) =>{
-      console.log(data)
+      // console.log(data)
       signInUser(data.email,data.password)
       .then((userCredential) => {
         // Signed in
         const user = userCredential.user;
         setLoginEmail(data.email);
+        // console.log('logged')
         // ...
       }).catch((error) => {
         const errorCode = error.code;

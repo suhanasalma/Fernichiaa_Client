@@ -10,28 +10,35 @@ export const authContext = createContext()
 
 
 const SharedContext = ({children}) => {
-   const [user,setUser] = useState()
+   const [user,setUser] = useState('')
+      const [loading, setLoading] = useState(true);
+
 
    const googleAuth = new GoogleAuthProvider()
 
 
    const createUser = (email,password) =>{
+      setLoading(true)
       return createUserWithEmailAndPassword(auth,email,password);
    }
 
    const signInUser = (email, password) => {
+      setLoading(true);
      return signInWithEmailAndPassword(auth, email, password);
    };
 
    const updateUser = (profile) =>{
+      setLoading(true);
       return updateProfile(auth.currentUser,profile);
    }
 
    const userDelete = ()=>{
+      setLoading(true);
       return deleteUser(auth.currentUser)
    }
 
    const createGoogleUser = () =>{
+      setLoading(true);
       return signInWithPopup(auth, googleAuth)
         
    }
@@ -44,6 +51,7 @@ const SharedContext = ({children}) => {
    useEffect(()=>{
       const unsubscribed = onAuthStateChanged(auth,currentUser=>{
          setUser(currentUser)
+         setLoading(false);
       })
       return () => unsubscribed();
    },[])
@@ -63,6 +71,7 @@ const SharedContext = ({children}) => {
      updateUser,
      userDelete,
      createGoogleUser,
+     loading,
    };
 
    return (

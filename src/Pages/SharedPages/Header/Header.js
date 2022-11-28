@@ -31,6 +31,9 @@ const Header = () => {
       <li>
         <Link to="/allproducts">Products</Link>
       </li>
+      <li>
+        <Link to="/blogs">Blogs</Link>
+      </li>
 
       {user?.uid ? (
         <>
@@ -39,6 +42,12 @@ const Header = () => {
           </li> */}
           <li onClick={signOut}>
             <Link>Logout</Link>
+          </li>
+          <li>
+            <Link to="/dashboard">Dashboard</Link>
+          </li>
+          <li>
+            <Link to="/dashboard">{user.displayName}</Link>
           </li>
         </>
       ) : (
@@ -94,12 +103,12 @@ const Header = () => {
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal p-0">{menus}</ul>
       </div>
-      {user?.uid && (
-        <div className="navbar-end gap-5">
+      {/* {user?.uid && (
+        <div className="navbar-end gap-5 ">
           <Link to="/dashboard">Dashboard</Link>
           <Link to="/dashboard">{user.displayName}</Link>
         </div>
-      )}
+      )} */}
       <label htmlFor="my-drawer-2" className=" lg:hidden">
         <svg
           xmlns="http://www.w3.org/2000/svg"

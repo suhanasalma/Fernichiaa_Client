@@ -26,7 +26,7 @@ const MyProducts = () => {
     isLoading,
     refetch,
   } = useQuery({
-    queryKey: ["myProducts", user?.email],
+    queryKey: ["sellProducts", user?.email],
     queryFn: () =>
       fetch(`http://localhost:5000/sellProducts/${user?.email}`).then((res) =>
         res.json()
@@ -99,7 +99,13 @@ const MyProducts = () => {
             ))}
           </tbody>
         </table>
-        {modalInfo && <EditModal modalInfo={modalInfo} />}
+        {modalInfo && (
+          <EditModal
+            setModalInfo={setModalInfo}
+            refetch={refetch}
+            modalInfo={modalInfo}
+          />
+        )}
       </div>
     </div>
   );

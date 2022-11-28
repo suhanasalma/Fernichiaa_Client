@@ -44,17 +44,6 @@ const AllBuyers = () => {
         console.log("delete", data);
         toast('user deleted success')
         refetch()
-        // userDelete()
-        //   .then(() => {
-        //     // User deleted.
-        //     console.log("user deleted");
-        //     // refetch()
-        //     toast('successfully user deleted')
-        //   })
-        //   .catch((error) => {
-        //     // An error ocurred
-        //     // ...
-        //   });
       });
   };
 

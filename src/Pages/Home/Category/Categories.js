@@ -9,8 +9,6 @@ import Loading from '../../../Loading/Loading';
 import Category from './Category';
 
 const Categories = () => {
-   // const [categories,setCategories] = useState([])
-
    const { data:categories=[] ,isLoading} = useQuery({
      queryKey: ["categories"],
      queryFn: () => 
@@ -18,21 +16,12 @@ const Categories = () => {
      .then(res=>res.json())
    });
 
-   // console.log(categories)
    if (isLoading){
       return <Loading/>
    }
-     // useEffect(()=>{
-     //    fetch("http://localhost:5000/categories")
-     //      .then((res) => res.json())
-     //      .then((data) => setCategories(data));
-
-     // },[])
-
-     // console.log(categories)
 
      return (
-       <div className="grid grid-cols-5">
+       <div className="grid grid-cols-5 md:grid-cols-3 sm:grid-cols-1  gap-10">
          {categories?.map((categoryy) => (
            <Category key={categoryy._id} categoryy={categoryy}></Category>
          ))}
