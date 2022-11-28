@@ -11,7 +11,7 @@ const DashBoard = () => {
   const [isLoading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch(`http://localhost:5000/users/${user?.email}`)
+    fetch(`https://server-side-one-beta.vercel.app/users/${user?.email}`)
       .then((res) => res.json())
       .then((data) => {
         serCurrentUser(data);

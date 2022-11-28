@@ -1,12 +1,10 @@
-
 import React, { useEffect, useState } from "react";
 
 const AdminCard = () => {
   const [adminPannels, setadminPannels] = useState("");
 
-
   useEffect(() => {
-    fetch("http://localhost:5000/users/suhanasalma@gmail.com")
+    fetch("https://server-side-one-beta.vercel.app/users/suhanasalma@gmail.com")
       .then((res) => res.json())
       .then((data) => setadminPannels(data));
   }, []);

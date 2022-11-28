@@ -1,16 +1,19 @@
-import { useQuery } from '@tanstack/react-query';
-import React, { useContext, useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { toast } from 'react-toastify';
-import { authContext } from '../../../Context/SharedContext';
+import { useQuery } from "@tanstack/react-query";
+import React, { useContext, useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
+import { authContext } from "../../../Context/SharedContext";
+import useTitle from "../../../Hooks/useTitle";
 
 const BookingModal = ({ modalInfo, setModalInfo }) => {
+    useTitle("Booking Modal");
+
   const { user } = useContext(authContext);
   const [receneUser, setReceneUser] = useState("");
   const { register, handleSubmit } = useForm();
 
   useEffect(() => {
-    fetch(`http://localhost:5000/users/${user?.email}`)
+    fetch(`https://server-side-one-beta.vercel.app/users/${user?.email}`)
       .then((res) => res.json())
       .then((data) => {
         setReceneUser(data);
@@ -55,7 +58,7 @@ const BookingModal = ({ modalInfo, setModalInfo }) => {
       Pickinglocation: location,
     };
 
-    fetch("http://localhost:5000/orders", {
+    fetch("https://server-side-one-beta.vercel.app/orders", {
       method: "post",
       headers: {
         "content-type": "application/json",
@@ -65,7 +68,7 @@ const BookingModal = ({ modalInfo, setModalInfo }) => {
       .then((res) => res.json())
       .then((data) => {
         toast("Booked For Now");
-        setModalInfo(null)
+        setModalInfo(null);
         console.log(data);
       });
     console.log(order);
@@ -191,11 +194,11 @@ const BookingModal = ({ modalInfo, setModalInfo }) => {
                 Price
               </label>
               <input
-                {...register("oldPrice")}
+                {...register("newPrice")}
                 placeholder="120$"
                 value={`${newPrice}$`}
                 required
-                id="oldPrice"
+                id="newPrice"
                 type="text"
                 className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
               />

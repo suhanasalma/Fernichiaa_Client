@@ -34,7 +34,9 @@ export const router = createBrowserRouter([
       {
         path: "/categories/:id",
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/categories/products/${params.id}`),
+          fetch(
+            `https://server-side-one-beta.vercel.app/categories/products/${params.id}`
+          ),
         element: (
           <PrivateRoute>
             <Products />
@@ -44,12 +46,14 @@ export const router = createBrowserRouter([
       {
         path: "/productDetails/:id",
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/productDetails/${params.id}`),
+          fetch(
+            `https://server-side-one-beta.vercel.app/productDetails/${params.id}`
+          ),
         element: <ProductDetails />,
       },
       {
         path: "/allproducts",
-        // loader: () => fetch(`http://localhost:5000/allProducts`),
+        // loader: () => fetch(`https://server-side-one-beta.vercel.app/allProducts`),
         element: (
           <PrivateRoute>
             <AllProducts />
@@ -129,7 +133,7 @@ export const router = createBrowserRouter([
       {
         path: "/dashboard/confirmpayment/:id",
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/orders/${params.id}`),
+          fetch(`https://server-side-one-beta.vercel.app/orders/${params.id}`),
         element: (
           <PrivateRoute>
             <ConfirmPayment />

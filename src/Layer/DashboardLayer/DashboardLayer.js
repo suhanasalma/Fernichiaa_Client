@@ -9,40 +9,35 @@ import Header from "../../Pages/SharedPages/Header/Header";
 
 const DashboardLayer = () => {
   const { user } = useContext(authContext);
-  const [currentUser,serCurrentUser] = useState('')
-  const [isLoading,setLoading] = useState(true)
+  const [currentUser, serCurrentUser] = useState("");
+  const [isLoading, setLoading] = useState(true);
   const [isAdmin] = useAdmin(user?.email);
-  useTitle('Dashboard')
+  useTitle("Dashboard");
 
-  console.log(user)
- 
+  console.log(user);
 
-    useEffect(() => {
-      fetch(`http://localhost:5000/users/${user?.email}`)
-        .then((res) => res.json())
-        .then((data) => {
-          serCurrentUser(data);
-          setLoading(false)
-        });
-    }, [user?.email]);
+  useEffect(() => {
+    fetch(`https://server-side-one-beta.vercel.app/users/${user?.email}`)
+      .then((res) => res.json())
+      .then((data) => {
+        serCurrentUser(data);
+        setLoading(false);
+      });
+  }, [user?.email]);
 
-    // const { data: currentUser = [], isLoading } = useQuery({
-    //   queryKey: ["currentUser", user?.email],
-    //   queryFn: () =>
-    //     fetch(`http://localhost:5000/users/${user?.email}`).then((res) =>
-    //       res.json()
-    //     ),
-    // });
+  // const { data: currentUser = [], isLoading } = useQuery({
+  //   queryKey: ["currentUser", user?.email],
+  //   queryFn: () =>
+  //     fetch(`https://server-side-one-beta.vercel.app/users/${user?.email}`).then((res) =>
+  //       res.json()
+  //     ),
+  // });
 
-    console.log(currentUser)
+  console.log(currentUser);
 
-    if(isLoading){
-      return <Loading></Loading>
-    }
-
-
-
-
+  if (isLoading) {
+    return <Loading></Loading>;
+  }
 
   return (
     <div>

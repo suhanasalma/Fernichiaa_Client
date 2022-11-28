@@ -7,14 +7,18 @@ import Loading from "../../../Loading/Loading";
 const AddProducts = () => {
   const { user } = useContext(authContext);
   // const [receneUser, setRecentUser] = useState("");
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
   // const [isLoading,setIsLoading] = useState(true)
-    const imageHostKey = process.env.REACT_APP_imgbb_key;
+  const imageHostKey = process.env.REACT_APP_imgbb_key;
 
   //   console.log(user)
 
   // useEffect(() => {
-  //   fetch(`http://localhost:5000/users/${user?.email}`)
+  //   fetch(`https://server-side-one-beta.vercel.app/users/${user?.email}`)
   //     .then((res) => res.json())
   //     .then((data) => {
   //       // console.log(data)
@@ -23,75 +27,72 @@ const AddProducts = () => {
   //     });
   // }, [user?.email]);
 
+  const { data: receneUser = "", isLoading } = useQuery({
+    queryKey: ["users", user?.email],
+    queryFn: () =>
+      fetch(
+        `https://server-side-one-beta.vercel.app/users/${user?.email}`
+      ).then((res) => res.json()),
+  });
 
-    const { data: receneUser ='',isLoading } = useQuery({
-      queryKey: ["users", user?.email],
-      queryFn: () =>
-        fetch(`http://localhost:5000/users/${user?.email}`).then((res) =>
-          res.json()
-        ),
-    });
+  console.log(receneUser);
 
-    console.log(receneUser)
-
-    if(isLoading){
-      return <Loading></Loading>
-    }
+  if (isLoading) {
+    return <Loading></Loading>;
+  }
 
   console.log(receneUser);
 
   const handleAddProducts = (data) => {
-   const img = data.img[0];
-   const formData = new FormData();
-   formData.append("image", img);
-   const url = `https://api.imgbb.com/1/upload?&key=${imageHostKey}`;
-   fetch(url, {
-     method: "POST",
-     body: formData,
-   })
-   .then(res=>res.json())
-   .then(result=>{
-      console.log(result);
-      if (result.success) {
-         const product = {
-           categoryId: parseInt(data.categoryName.split(",")[1]),
-           categoryName: data.categoryName.split(",")[0],
-           title: data.title,
-           newPrice: parseInt(data.newPrice),
-           oldPrice: parseInt(data.oldPrice),
-           details: data.details,
-           location: data.location,
-           boughtYear: parseInt(data.boughtYear),
-           img: result.data.display_url,
-           sellerName: receneUser.name,
-           sellerEmail: receneUser.email,
-           sellerImg: receneUser.img,
-           sellerPhone: receneUser.phone,
-           wishlist:false,
-           booked:false,
-           paid:false,
-           advertised:false,
-           isVarified:receneUser.isVarified,
-           postedTime: new Date().toISOString(),
-         };
-    fetch("http://localhost:5000/allProducts", {
-      //  method: "POST",
+    const img = data.img[0];
+    const formData = new FormData();
+    formData.append("image", img);
+    const url = `https://api.imgbb.com/1/upload?&key=${imageHostKey}`;
+    fetch(url, {
       method: "POST",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(product),
+      body: formData,
     })
       .then((res) => res.json())
-      .then((successdata) => {
-        console.log(successdata);
-        console.log('updated')
-        alert('successfully added')
+      .then((result) => {
+        console.log(result);
+        if (result.success) {
+          const product = {
+            categoryId: parseInt(data.categoryName.split(",")[1]),
+            categoryName: data.categoryName.split(",")[0],
+            title: data.title,
+            newPrice: parseInt(data.newPrice),
+            oldPrice: parseInt(data.oldPrice),
+            details: data.details,
+            location: data.location,
+            boughtYear: parseInt(data.boughtYear),
+            img: result.data.display_url,
+            sellerName: receneUser.name,
+            sellerEmail: receneUser.email,
+            sellerImg: receneUser.img,
+            sellerPhone: receneUser.phone,
+            wishlist: false,
+            booked: false,
+            paid: false,
+            advertised: false,
+            isVarified: receneUser.isVarified,
+            postedTime: new Date().toISOString(),
+          };
+          fetch("https://server-side-one-beta.vercel.app/allProducts", {
+            //  method: "POST",
+            method: "POST",
+            headers: {
+              "content-type": "application/json",
+            },
+            body: JSON.stringify(product),
+          })
+            .then((res) => res.json())
+            .then((successdata) => {
+              console.log(successdata);
+              console.log("updated");
+              alert("successfully added");
+            });
+        }
       });
-         
-      }
-   })
-    
   };
 
   return (
@@ -109,7 +110,10 @@ const AddProducts = () => {
         <form onSubmit={handleSubmit(handleAddProducts)}>
           <div className="grid grid-cols-1 gap-6 mt-4 sm:grid-cols-2">
             <div>
-              <label className="text-gray-700 dark:text-gray-200" for="username">
+              <label
+                className="text-gray-700 dark:text-gray-200"
+                for="username"
+              >
                 Username
               </label>
               <input
@@ -144,7 +148,10 @@ const AddProducts = () => {
             </div>
 
             <div>
-              <label className="text-gray-700 dark:text-gray-200" for="password">
+              <label
+                className="text-gray-700 dark:text-gray-200"
+                for="password"
+              >
                 Age
               </label>
               <input
@@ -174,7 +181,10 @@ const AddProducts = () => {
               />
             </div>
             <div>
-              <label className="text-gray-700 dark:text-gray-200" for="password">
+              <label
+                className="text-gray-700 dark:text-gray-200"
+                for="password"
+              >
                 Role
               </label>
               <input
@@ -231,10 +241,16 @@ const AddProducts = () => {
               Select Category
             </label>
             <select
-              {...register("categoryName")}
+              required
+              {...register("categoryName", {
+                required: "Please select category",
+              })}
               className="block w-full px-5 py-3 mt-2 text-gray-700 placeholder-gray-400 bg-white border border-gray-200 rounded-md  focus:border-secondary  focus:ring-secondary focus:outline-none focus:ring focus:ring-opacity-40"
               //  {...register("role", { required: true })}
             >
+              {errors.categoryName && (
+                <span className="text-red-700">Please Provide Email</span>
+              )}
               <option selected value="Office Chair,5">
                 Office Chair
               </option>
@@ -258,13 +274,16 @@ const AddProducts = () => {
               Product Name
             </label>
             <input
-              {...register("title")}
+              {...register("title", { required: "please enter product name" })}
               placeholder="Josefa Queen Size Bed"
               required
               id="title"
               type="text"
               className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
             />
+            {errors.title && (
+              <span className="text-red-700">Please Provide Email</span>
+            )}
           </div>
 
           <div className="mb-5">
@@ -279,7 +298,7 @@ const AddProducts = () => {
               placeholder="120$"
               required
               id="oldPrice"
-              type="text"
+              type="number"
               className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
             />
           </div>
@@ -294,8 +313,9 @@ const AddProducts = () => {
               {...register("boughtYear")}
               placeholder="2018"
               required
+
               id="boughtYear"
-              type="text"
+              type="number"
               className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
             />
           </div>
@@ -308,7 +328,7 @@ const AddProducts = () => {
               placeholder="70$"
               required
               id="newPrice"
-              type="text"
+              type="number"
               className="block w-full px-4 py-2 mt-2 text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"
             />
           </div>

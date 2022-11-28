@@ -1,10 +1,8 @@
-import React from 'react';
-import { toast } from 'react-toastify';
+import React from "react";
+import { toast } from "react-toastify";
 
 const MyBuyer = ({ refetch, buyer }) => {
   console.log(buyer);
-
-
 
   const {
     Productimg,
@@ -18,25 +16,23 @@ const MyBuyer = ({ refetch, buyer }) => {
     Pickinglocation,
   } = buyer;
 
+  const handleOrderDelete = (data) => {
+    console.log(data.productCode);
+    // console.log(`/orders/myorder/delete/${data._id}`)
 
-
-    const handleOrderDelete = (data) => {
-      console.log(data.productCode);
-      // console.log(`/orders/myorder/delete/${data._id}`)
-
-      fetch(`http://localhost:5000/orders/myorder/delete/${data._id}`, {
+    fetch(
+      `https://server-side-one-beta.vercel.app/orders/myorder/delete/${data._id}`,
+      {
         method: "delete",
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          refetch();
-          toast("deleted from order");
-          console.log(data);
-        });
-    };
-
-
-
+      }
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        refetch();
+        toast("deleted from order");
+        console.log(data);
+      });
+  };
 
   return (
     <tr>

@@ -12,19 +12,20 @@ const AllProducts = () => {
   const [count, setCount] = useState(0);
   const [page, setPage] = useState(0);
   const limit = 6;
-  const [modalInfo,setModalInfo] = useState('')
-  useTitle('ALl Products')
+  const [modalInfo, setModalInfo] = useState("");
+  useTitle("ALl Products");
   // const page =count/limit
 
   useEffect(() => {
-    fetch(`http://localhost:5000/allProducts?page=${page}&limit=${limit}`)
+    fetch(
+      `https://server-side-one-beta.vercel.app/allProducts?page=${page}&limit=${limit}`
+    )
       .then((res) => res.json())
       .then((data) => {
         setAllProducts(data.result);
         setCount(data.count);
       });
   }, [page, limit]);
-
 
   console.log(allProducts);
 

@@ -1,7 +1,7 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from "react";
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js";
-import { authContext } from '../../../Context/SharedContext';
-import { async } from '@firebase/util';
+import { authContext } from "../../../Context/SharedContext";
+import { async } from "@firebase/util";
 
 const Confirm = ({ order }) => {
   const stripe = useStripe();
@@ -38,11 +38,11 @@ const Confirm = ({ order }) => {
 
     _id,
   } = order;
-  console.log(price)
+  console.log(price);
 
   useEffect(() => {
     // Create PaymentIntent as soon as the page loads
-    fetch("http://localhost:5000/create-payment-intent", {
+    fetch("https://server-side-one-beta.vercel.app/create-payment-intent", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -98,39 +98,31 @@ const Confirm = ({ order }) => {
       setProcessing(false);
       return;
     }
-    if(paymentIntent.status==='succeeded'){
-         console.log('card info', card)
-         setSuccess('Thank you, your payment done')
-         setTransectionId(paymentIntent.id)
-         
-         const confirmPayment = {
-           price,
-           productCode,
-           transectionId: paymentIntent.id,
-           buyerEmail,
-           sellerEmail,
-           orderId: _id,
-         };
-         console.log(confirmPayment)
+    if (paymentIntent.status === "succeeded") {
+      console.log("card info", card);
+      setSuccess("Thank you, your payment done");
+      setTransectionId(paymentIntent.id);
 
-            fetch("http://localhost:5000/payments",{
-              method:"POST",
-              headers:{'content-type':"application/json"},
-              body:JSON.stringify(confirmPayment)
+      const confirmPayment = {
+        price,
+        productCode,
+        transectionId: paymentIntent.id,
+        buyerEmail,
+        sellerEmail,
+        orderId: _id,
+      };
+      console.log(confirmPayment);
 
-            })
-            .then(res=>res.json())
-            .then(data=>console.log(data))
-          
-          
-          }
+      fetch("https://server-side-one-beta.vercel.app/payments", {
+        method: "POST",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify(confirmPayment),
+      })
+        .then((res) => res.json())
+        .then((data) => console.log(data));
+    }
 
-            
-
-    console.log("paymentIntent",paymentIntent)
-
-    
-    
+    console.log("paymentIntent", paymentIntent);
   };
   return (
     <form onSubmit={handleSubmit}>

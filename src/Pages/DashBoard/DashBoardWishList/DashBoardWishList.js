@@ -1,23 +1,22 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { json, Link } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import { authContext } from '../../../Context/SharedContext';
+import React, { useContext, useEffect, useState } from "react";
+import { json, Link } from "react-router-dom";
+import { toast } from "react-toastify";
+import { authContext } from "../../../Context/SharedContext";
 
 const DashBoardWishList = ({ wishlist, refetch }) => {
   const { user } = useContext(authContext);
   const [receneUser, setReceneUser] = useState("");
 
-
-  
   useEffect(() => {
-    fetch(`http://localhost:5000/users/${user?.email}`)
+    fetch(`https://server-side-one-beta.vercel.app/users/${user?.email}`)
       .then((res) => res.json())
       .then((data) => {
         setReceneUser(data);
       });
   }, [user?.email]);
 
-  console.log(receneUser)
+  console.log(user?.email)
+  console.log(receneUser);
 
   const {
     categoryName,
@@ -39,9 +38,12 @@ const DashBoardWishList = ({ wishlist, refetch }) => {
 
   const handleDeleteWishList = (data) => {
     console.log(data.productCode);
-    fetch(`http://localhost:5000/removeWishlist/${data.productCode}`, {
-      method: "put",
-    })
+    fetch(
+      `https://server-side-one-beta.vercel.app/removeWishlist/${data?.productCode}`,
+      {
+        method: "put",
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
@@ -70,21 +72,20 @@ const DashBoardWishList = ({ wishlist, refetch }) => {
 
     console.log(order);
 
-      fetch("http://localhost:5000/transferOrder", {
+    fetch("https://server-side-one-beta.vercel.app/transferOrder", {
       method: "post",
       headers: {
-     'content-type':'application/json'
-    },
-       body:JSON.stringify(order)
-      })
-      .then(res=>res.json())
-      .then(data=>{
-        console.log(data)
-        refetch()
-        toast('added to order')
-      })
-    }
-
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(order),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        refetch();
+        toast("added to order");
+      });
+  };
 
   return (
     <tr>
@@ -128,6 +129,6 @@ const DashBoardWishList = ({ wishlist, refetch }) => {
       </th>
     </tr>
   );
-};;
+};
 
 export default DashBoardWishList;

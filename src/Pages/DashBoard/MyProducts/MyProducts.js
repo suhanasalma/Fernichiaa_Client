@@ -1,10 +1,10 @@
-import { useQuery } from '@tanstack/react-query';
-import React, { useContext, useEffect, useState } from 'react';
-import { toast } from 'react-toastify';
-import { authContext } from '../../../Context/SharedContext';
-import Loading from '../../../Loading/Loading';
-import EditModal from './EditModal';
-import MyProduct from './MyProduct';
+import { useQuery } from "@tanstack/react-query";
+import React, { useContext, useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import { authContext } from "../../../Context/SharedContext";
+import Loading from "../../../Loading/Loading";
+import EditModal from "./EditModal";
+import MyProduct from "./MyProduct";
 
 const MyProducts = () => {
   // const [myProducts, setMyProducts] = useState([]);
@@ -12,7 +12,7 @@ const MyProducts = () => {
   const [modalInfo, setModalInfo] = useState(null);
 
   // useEffect(() => {
-  //   fetch(`http://localhost:5000/sellProducts/${user?.email}`)
+  //   fetch(`https://server-side-one-beta.vercel.app/sellProducts/${user?.email}`)
   //     .then((res) => res.json())
   //     .then((data) => {
   //       // console.log(data);
@@ -28,38 +28,44 @@ const MyProducts = () => {
   } = useQuery({
     queryKey: ["sellProducts", user?.email],
     queryFn: () =>
-      fetch(`http://localhost:5000/sellProducts/${user?.email}`).then((res) =>
-        res.json()
-      ),
+      fetch(
+        `https://server-side-one-beta.vercel.app/sellProducts/${user?.email}`
+      ).then((res) => res.json()),
   });
 
-  if(isLoading){
-    return <Loading/>
+  if (isLoading) {
+    return <Loading />;
   }
 
   const handleDeleteProduct = (deleteItem) => {
     console.log(deleteItem);
-    fetch(`http://localhost:5000/products/${deleteItem._id}`, {
-      method: "delete",
-    })
+    fetch(
+      `https://server-side-one-beta.vercel.app/products/${deleteItem._id}`,
+      {
+        method: "delete",
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
-         toast("successfully deleted");
-         refetch();
+        toast("successfully deleted");
+        refetch();
         console.log(data);
       });
   };
 
   const handleAdvertise = (adData) => {
     console.log(adData);
-    fetch(`http://localhost:5000/products/boost/${adData._id}`, {
-      method: "put",
-    })
+    fetch(
+      `https://server-side-one-beta.vercel.app/products/boost/${adData._id}`,
+      {
+        method: "put",
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         // alert("added for advertise");
-        toast('added for advertise')
-        refetch()
+        toast("added for advertise");
+        refetch();
         console.log(data);
       });
   };

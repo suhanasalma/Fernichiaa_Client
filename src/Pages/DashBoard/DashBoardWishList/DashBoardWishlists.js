@@ -1,8 +1,8 @@
-import { useQuery } from '@tanstack/react-query';
-import React, { useContext, useEffect, useState } from 'react';
-import { authContext } from '../../../Context/SharedContext';
-import Loading from '../../../Loading/Loading';
-import DashBoardWishList from './DashBoardWishList';
+import { useQuery } from "@tanstack/react-query";
+import React, { useContext, useEffect, useState } from "react";
+import { authContext } from "../../../Context/SharedContext";
+import Loading from "../../../Loading/Loading";
+import DashBoardWishList from "./DashBoardWishList";
 
 const DashBoardWishlists = () => {
   // const [wishlists, setWishlists] = useState([]);
@@ -11,7 +11,7 @@ const DashBoardWishlists = () => {
   // console.log(user);
 
   // useEffect(() => {
-  //   fetch(`http://localhost:5000/wishlists?email=${user?.email}`, {
+  //   fetch(`https://server-side-one-beta.vercel.app/wishlists?email=${user?.email}`, {
   //     headers: {
   //       authorization: `bearer ${localStorage.getItem("furniture-token")}`,
   //     },
@@ -24,17 +24,25 @@ const DashBoardWishlists = () => {
   //     });
   // }, [user?.email]);
 
-   const { data: wishlists =[], isloading,refetch } = useQuery({
-     queryKey: ["wishlists", user?.email],
-     queryFn: () =>
-       fetch(`http://localhost:5000/wishlists?email=${user?.email}`, {
-         headers: {
-           authorization: `bearer ${localStorage.getItem("furniture-token")}`,
-         },
-       }).then((res) => res.json()),
-   });
+  const {
+    data: wishlists = [],
+    isloading,
+    refetch,
+  } = useQuery({
+    queryKey: ["wishlists", user?.email],
+    queryFn: () =>
+      fetch(
+        `https://server-side-one-beta.vercel.app/wishlists?email=${user?.email}`,
+        {
+          headers: {
+            authorization: `bearer ${localStorage.getItem("furniture-token")}`,
+          },
+        }
+      ).then((res) => res.json()),
+  });
 
   //  console.log(wishlists)
+  console.log(user?.email)
 
   if (isloading) {
     return <Loading />;

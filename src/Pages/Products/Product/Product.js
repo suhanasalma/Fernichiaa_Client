@@ -1,29 +1,27 @@
 import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import { authContext } from "../../../Context/SharedContext";
-  import { toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { useQuery } from "@tanstack/react-query";
 import Loading from "../../../Loading/Loading";
-
-
 
 const Product = ({ product, setModalInfo }) => {
   const { user } = useContext(authContext);
 
-  const { data: currentUser = [], isLoading,refetch } = useQuery({
+  const {
+    data: currentUser = [],
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ["currentUser", user?.email],
     queryFn: () =>
-      fetch(`http://localhost:5000/users/${user?.email}`).then((res) =>
-        res.json()
-      ),
+      fetch(
+        `https://server-side-one-beta.vercel.app/users/${user?.email}`
+      ).then((res) => res.json()),
   });
 
-
-
-
-
-  if(isLoading){
-    return <Loading></Loading>
+  if (isLoading) {
+    return <Loading></Loading>;
   }
 
   const {
@@ -42,9 +40,8 @@ const Product = ({ product, setModalInfo }) => {
     isVarified,
     categoryId,
     sellerEmail,
-    sellerPhone
+    sellerPhone,
   } = product;
-
 
   const handleWishList = () => {
     const wishlist = {
@@ -58,12 +55,12 @@ const Product = ({ product, setModalInfo }) => {
       location,
       img,
       sellerImg,
-       sellerPhone,
+      sellerPhone,
       wishingEmail: currentUser?.email,
       productCode: _id,
     };
 
-    fetch("http://localhost:5000/addwishlists", {
+    fetch("https://server-side-one-beta.vercel.app/addwishlists", {
       //  method: "POST",
       method: "POST",
       headers: {
@@ -76,12 +73,8 @@ const Product = ({ product, setModalInfo }) => {
         refetch();
         console.log(data);
         toast("product added to wishlist");
-        
       });
-    
   };
-
-
 
   return (
     <div className="shadow-2xl rounded-lg p-6">

@@ -10,7 +10,7 @@ const AllBuyers = () => {
   // const { userDelete } = useContext(authContext);
 
   // useEffect(() => {
-  //   fetch("http://localhost:5000/users?role=user")
+  //   fetch("https://server-side-one-beta.vercel.app/users?role=user")
   //     .then((res) => res.json())
   //     .then((data) => {
   //       // console.log(data)
@@ -25,25 +25,25 @@ const AllBuyers = () => {
   } = useQuery({
     queryKey: ["allbuyer"],
     queryFn: () =>
-      fetch("http://localhost:5000/users?role=user").then((res) => res.json()),
+      fetch("https://server-side-one-beta.vercel.app/users?role=user").then(
+        (res) => res.json()
+      ),
   });
 
-  if(isLoading){
-    return <Loading/>
+  if (isLoading) {
+    return <Loading />;
   }
-
-
 
   const handleDeleteUser = (user) => {
     console.log(user);
-    fetch(`http://localhost:5000/users/${user._id}`, {
+    fetch(`https://server-side-one-beta.vercel.app/users/${user._id}`, {
       method: "DELETE",
     })
       .then((res) => res.json())
       .then((data) => {
         console.log("delete", data);
-        toast('user deleted success')
-        refetch()
+        toast("user deleted success");
+        refetch();
       });
   };
 

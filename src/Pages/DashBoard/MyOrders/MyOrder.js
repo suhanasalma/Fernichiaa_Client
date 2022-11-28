@@ -1,7 +1,7 @@
-import { useQuery } from '@tanstack/react-query';
-import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { toast } from 'react-toastify';
+import { useQuery } from "@tanstack/react-query";
+import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const MyOrder = ({ order, refetch }) => {
   // console.log(order);
@@ -14,34 +14,35 @@ const MyOrder = ({ order, refetch }) => {
     sellerName,
     sellerImg,
     sellerPhone,
-    _id
+    _id,
   } = order;
 
-  console.log(order)
+  console.log(order);
 
   // const { data: products } = useQuery({
   //   queryKey: ["products"],
-  //   queryFn: () => fetch("http://localhost:5000/products")
+  //   queryFn: () => fetch("https://server-side-one-beta.vercel.app/products")
   //   .then(res=>res.json)
   // });
 
   // console.log(products)
- 
 
   const handleOrderDelete = (data) => {
     console.log(data.productCode);
     // console.log(`/orders/myorder/delete/${data._id}`)
 
-    fetch(`http://localhost:5000/orders/myorder/delete/${data._id}`, 
-    {
-      method: "delete",
-    }
+    fetch(
+      `https://server-side-one-beta.vercel.app/orders/myorder/delete/${data._id}`,
+      {
+        method: "delete",
+      }
     )
       .then((res) => res.json())
       .then((data) => {
-        refetch()
-        toast('deleted from order')
-        console.log(data)});
+        refetch();
+        toast("deleted from order");
+        console.log(data);
+      });
   };
   return (
     <tr>
@@ -77,11 +78,11 @@ const MyOrder = ({ order, refetch }) => {
         </button>
       </th>
       <th>
-          <Link to={`/dashboard/confirmpayment/${_id}`}>
-            <button disabled={order?.paid } className="btn btn-xs">
-              Pay
-            </button>
-          </Link>
+        <Link to={`/dashboard/confirmpayment/${_id}`}>
+          <button disabled={order?.paid} className="btn btn-xs">
+            Pay
+          </button>
+        </Link>
       </th>
     </tr>
   );

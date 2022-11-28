@@ -7,12 +7,11 @@ import Product from "../../../Products/Product/Product";
 
 const Advertisements = () => {
   const [adervertises, setAdvertised] = useState([]);
-     const [modalInfo, setModalInfo] = useState(null);
-       useTitle("Advertisement");
-
+  const [modalInfo, setModalInfo] = useState(null);
+  useTitle("Advertisement");
 
   useEffect(() => {
-    fetch("http://localhost:5000/allProducts/advertise")
+    fetch("https://server-side-one-beta.vercel.app/allProducts/advertise")
       .then((res) => res.json())
       .then((data) => {
         //  console.log(data)
@@ -56,7 +55,7 @@ const Advertisements = () => {
           )}
         </div>
       ) : (
-        <div className="uppercase text-4xl flex justify-center items-center text-secondary my-20" >
+        <div className="uppercase text-4xl flex justify-center items-center text-secondary my-20">
           <h1>Right now nothing is available For Advertise</h1>
         </div>
       )}

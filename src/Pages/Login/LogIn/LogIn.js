@@ -3,8 +3,10 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { authContext } from "../../../Context/SharedContext";
 import useToken from "../../../Hooks/useToken";
+import useTitle from "../../../Hooks/useTitle";
 
 const LogIn = () => {
+  useTitle('Log In')
    const {
      register,
      handleSubmit,

@@ -1,5 +1,5 @@
-import React from 'react';
-import { toast } from 'react-toastify';
+import React from "react";
+import { toast } from "react-toastify";
 
 const EditModal = ({ modalInfo, refetch, setModalInfo }) => {
   const { title, newPrice, details, _id } = modalInfo;
@@ -19,7 +19,7 @@ const EditModal = ({ modalInfo, refetch, setModalInfo }) => {
       details,
     };
     console.log(updateInfo);
-    fetch(`http://localhost:5000/products/edit/${_id}`, {
+    fetch(`https://server-side-one-beta.vercel.app/products/edit/${_id}`, {
       method: "post",
       headers: {
         "content-type": "application/json",
@@ -31,7 +31,7 @@ const EditModal = ({ modalInfo, refetch, setModalInfo }) => {
         console.log(data);
         toast("edited");
         refetch();
-        setModalInfo(null)
+        setModalInfo(null);
         //  alert("successfully updated");
       });
   };
