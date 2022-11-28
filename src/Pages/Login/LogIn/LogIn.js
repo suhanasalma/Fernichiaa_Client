@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { authContext } from "../../../Context/SharedContext";
 import useToken from "../../../Hooks/useToken";
 import useTitle from "../../../Hooks/useTitle";
+import { toast } from "react-toastify";
 
 const LogIn = () => {
   useTitle('Log In')
@@ -38,6 +39,7 @@ const LogIn = () => {
         const errorCode = error.code;
         const errorMessage = error.message;
         console.error(error)
+        toast(error.message)
       });
 
    }
