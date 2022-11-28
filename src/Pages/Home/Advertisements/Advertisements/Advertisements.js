@@ -56,8 +56,8 @@ const Advertisements = () => {
           )}
         </div>
       ) : (
-        <div className="uppercase text-4xl flex justify-center items-center text-secondary" >
-          <h1>Right now nothing is available </h1>
+        <div className="uppercase text-4xl flex justify-center items-center text-secondary my-20" >
+          <h1>Right now nothing is available For Advertise</h1>
         </div>
       )}
 
